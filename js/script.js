@@ -226,3 +226,33 @@ if (shutdownBtn) {
         }, 1000);
     });
 }
+
+// ==========================================
+// GESTION DES CLICS SPÉCIAUX (Droit & Easter Egg)
+// ==========================================
+
+document.addEventListener('mousedown', (e) => {
+    
+    // CAS 1 : Clic Droit (bouton 2)
+    if (e.button === 2) {
+        document.body.classList.add('right-click-active');
+    }
+
+    // CAS 2 : EASTER EGG (Clic Gauche + touche SHIFT maintenue)
+    // e.button === 0 (Clic gauche)
+    // e.shiftKey === true (Touche Majuscule enfoncée)
+    if (e.button === 0 && e.shiftKey) {
+        // On ajoute la classe CSS spéciale
+        document.body.classList.add('easter-egg-active');
+        console.log("Easter Egg trouvé !"); // Petit message dans la console (F12)
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    // Quand on relâche le clic, on nettoie toutes les classes spéciales
+    document.body.classList.remove('right-click-active');
+    document.body.classList.remove('easter-egg-active');
+});
+
+// OPTIONNEL : Bloquer le menu contextuel (si tu l'avais déjà)
+document.addEventListener('contextmenu', (e) => e.preventDefault());

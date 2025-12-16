@@ -28,7 +28,14 @@
     font-family: 'Courier New', Courier, monospace; /* Police rétro conservée */
 }
 
-/* GESTION DES CURSEURS (Tes chemins conservés) */
+body.easter-egg-active,
+body.easter-egg-active * {
+    /* Le !important est vital pour écraser le curseur de clic normal (:active) */
+    cursor: url('/assets/fuck.png'), auto !important;
+    /* Optionnel : un petit effet visuel en plus pour montrer que c'est spécial */
+    /* filter: invert(1); (Inverser les couleurs du site pendant le clic) */
+}
+
 body {
     cursor: url('/assets/curseur\ copie.png'), auto;
     overflow: hidden; 
