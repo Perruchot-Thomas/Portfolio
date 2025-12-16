@@ -1,9 +1,13 @@
+/* ============================================================
+   PORTFOLIO OS - SCRIPT COMPLET (CORRIGÉ)
+   ============================================================ */
+
 document.addEventListener('DOMContentLoaded', () => {
     
     // === VARIABLES GLOBALES ===
     let highestZIndex = 100;
 
-    // === 1. FONCTIONS UTILITAIRES ===
+    // === 1. FONCTIONS UTILITAIRES (Z-Index et Drag & Drop) ===
     
     function bringToFront(element) {
         highestZIndex++;
@@ -20,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             bringToFront(element);
             pos3 = e.clientX;
             pos4 = e.clientY;
+            // On écoute le mouvement sur tout le document
             document.onmouseup = closeDragElement;
             document.onmousemove = elementDrag;
         }
@@ -40,32 +45,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // === 2. INITIALISATION (FENÊTRES & ICÔNES) ===
+    // === 2. INITIALISATION DES FENÊTRES ET ICÔNES ===
     
     // Rendre les icônes du bureau déplaçables
     const desktopShortcuts = document.querySelectorAll('.desktop__shortcut');
     desktopShortcuts.forEach(shortcut => makeDraggable(shortcut));
 
-    // Rendre les fenêtres déplaçables et gérer la fermeture
+    // Rendre les fenêtres déplaçables via leur barre de titre
     const windows = document.querySelectorAll('.window');
     windows.forEach(win => {
         const header = win.querySelector('.window__header');
         if(header) makeDraggable(win, header);
         
-        // Passer au premier plan au clic
+        // Passer au premier plan quand on clique dessus
         win.addEventListener('mousedown', () => bringToFront(win));
         
-        // Bouton de fermeture (X)
+        // Gestion du bouton Fermer (X)
         const closeBtn = win.querySelector('.window__close');
         if (closeBtn) {
             closeBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Empêche de cliquer sur la fenêtre en dessous
+                e.stopPropagation(); // Évite les conflits
                 win.classList.remove('active');
             });
         }
     });
 
-    // === 3. SYSTÈME D'OUVERTURE DES DOSSIERS ===
+    // === 3. GESTION DE L'OUVERTURE DES DOSSIERS ===
     
     function openWindowFromTrigger(trigger) {
         const targetId = trigger.getAttribute('data-target');
@@ -75,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             targetWindow.classList.add('active');
             bringToFront(targetWindow);
             
-            // Recentrage automatique sur mobile
+            // Sur mobile : on centre la fenêtre
             if (window.innerWidth <= 768) {
                 targetWindow.style.top = "50%";
                 targetWindow.style.left = "50%";
@@ -84,17 +89,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Gestion du clic sur les dossiers (Icônes bureau + Icônes dans fenêtres)
+    // On attache les événements aux dossiers (Double clic PC / Simple clic Mobile)
     const allTriggers = document.querySelectorAll('[data-target]');
     allTriggers.forEach(trigger => {
-        // Double Clic pour Ordinateur
+        // PC : Double clic
         trigger.addEventListener('dblclick', (e) => {
             if (window.innerWidth > 768) {
                 e.stopPropagation();
                 openWindowFromTrigger(trigger);
             }
         });
-        // Simple Clic pour Mobile
+        // Mobile : Simple clic
         trigger.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 e.stopPropagation();
@@ -103,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // === 4. BARRE DES TÂCHES & MENU DÉMARRER ===
+    // === 4. BARRE DES TÂCHES ET MENU ===
     
     // Horloge
     function updateClock() {
@@ -126,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             startMenu.classList.toggle('visible');
             startBtn.classList.toggle('active');
         });
+        // Fermer si on clique ailleurs
         document.addEventListener('click', (e) => {
             if (!startMenu.contains(e.target) && e.target !== startBtn) {
                 startMenu.classList.remove('visible');
@@ -156,21 +162,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewTitle = document.getElementById('preview-title');
 
     function openPreview(e) {
-        e.stopPropagation(); // Empêche les conflits
+        e.stopPropagation(); 
         const imgClicked = e.target;
 
-        console.log("Image cliquée : ", imgClicked.src); // Pour le débogage
-
-        // 1. Mettre l'image source dans la visionneuse
+        // 1. Mettre l'image dans la visionneuse
         if (previewImg) previewImg.src = imgClicked.src;
 
-        // 2. Mettre à jour le titre
+        // 2. Mettre le titre
         if (previewTitle) {
             const label = imgClicked.parentElement.querySelector('.file-grid__label');
             previewTitle.textContent = "Visionneuse - " + (label ? label.innerText : "Image");
         }
 
-        // 3. Ouvrir la fenêtre
+        // 3. Afficher la fenêtre
         if (previewWindow) {
             previewWindow.classList.add('active');
             bringToFront(previewWindow);
@@ -182,11 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // On attache l'événement CLIC (Simple clic comme un lien)
+    // Attacher l'événement CLIC sur toutes les images "clickable-image"
+    // On utilise le simple clic pour simuler l'ouverture d'un fichier/lien
     const galleryImages = document.querySelectorAll('.clickable-image');
     galleryImages.forEach(img => {
         img.addEventListener('click', openPreview);
-        // Ajout du style curseur main pour bien montrer que c'est cliquable
         img.style.cursor = "pointer"; 
     });
 

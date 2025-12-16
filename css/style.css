@@ -1,470 +1,196 @@
 /* ============================================================
-   PALETTE DE COULEURS (DA "Ternes & Gris")
+   PALETTE DE COULEURS
    ============================================================ */
 :root {
-    --bg-desktop: #2a2a2a;      /* Gris très foncé (Fond du bureau) */
-    
-    --win-bg: #e0e0e0;          /* Gris clair (Intérieur fenêtre) */
-    --win-header-start: #000000;/* Gris moyen (Titre dégradé début) */
-    --win-header-end: #2e2e2e;  /* Gris foncé (Titre dégradé fin) */
-    --win-border: #1a1a1a;      /* Bordures presque noires (Style Flat) */
-    
-    --taskbar-bg: #3f3f3f;      /* Gris moyen foncé (Barre des tâches) */
-    --taskbar-btn: #525252;     /* Gris bouton */
-
-    --text-primary: #1a1a1a;    /* Noir (Texte principal) */
-    --text-light: #ffffff;      /* Blanc (Texte sur fond sombre) */
-    
-    --shadow-hard: 8px 8px 0px rgba(0, 0, 0, 0.4); /* Ombre nette "Brutale" */
+    --bg-desktop: #2a2a2a;
+    --win-bg: #e0e0e0;
+    --win-header-start: #000000;
+    --win-header-end: #2e2e2e;
+    --win-border: #1a1a1a;
+    --taskbar-bg: #3f3f3f;
+    --taskbar-btn: #525252;
+    --text-primary: #1a1a1a;
+    --text-light: #ffffff;
+    --shadow-hard: 8px 8px 0px rgba(0, 0, 0, 0.4);
 }
 
 /* ============================================================
-   1. RESET & CONFIGURATION GLOBALE
+   GLOBAL
    ============================================================ */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Courier New', Courier, monospace; /* Police rétro conservée */
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
 }
-
 
 body {
-    cursor: url('../assets/curseur\ copie.png'), auto;
-    overflow: hidden; 
-    height: 100vh; 
-    width: 100vw;
-    background-color: var(--bg-desktop); /* Application du fond gris foncé */
+    /* Chemin corrigé avec .. */
+    cursor: url('../assets/curseur copie.png'), auto;
+    overflow: hidden; height: 100vh; width: 100vw;
+    background-color: var(--bg-desktop);
 }
 
-/* Éléments cliquables */
-button, a, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__item, .taskbar__start-btn {
-    cursor: url('../assets/curseur\ copie.png'), pointer;
+button, a, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__item, .taskbar__start-btn, .clickable-image {
+    cursor: url('../assets/curseur copie.png'), pointer;
 }
 
-/* Curseur Clic Actif */
 *:active {
-    cursor: url('../assets/curseur\ point.png'), auto !important;
+    cursor: url('../assets/curseur point.png'), auto !important;
 }
 
 /* ============================================================
-   2. LE BUREAU (DESKTOP) & DÉCORATION
+   BUREAU
    ============================================================ */
 .desktop {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    
-    /* TON FOND D'ÉCRAN ORIGINAL */
-    background-color: #5D8AA8; /* Couleur de secours */
+    width: 100%; height: 100%; position: relative;
     background-image: url('../assets/fond.jpeg'); 
-    background-size: cover;       
-    background-position: center;  
-    background-repeat: no-repeat;
+    background-size: cover; background-position: center;
 }
 
-/* COUCHE DE DÉCORATION (Pour le Smiley et les formes) */
+.desktop.click-bg-active {
+    background-image: url('../assets/fond.png') !important;
+}
+
 .desktop__layer {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1; /* Derrière les icônes, devant le fond */
-    overflow: hidden;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1; pointer-events: none;
 }
 
-.deco-element {
-    position: absolute;
-    opacity: 0.9; 
-}
-
-/* Style du Smiley */
-.deco-smiley {
-    top: 15%; 
-    left: 20%;
-    width: 200px; /* Ajuste la taille */
-    transform: rotate(-10deg);
-    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
-}
-
-/* Style de la tache de couleur (optionnel) */
-.deco-blob {
-    bottom: 100px; right: 100px;
-    width: 300px; height: 300px;
-    background: linear-gradient(45deg, #ff0055, #ffcc00); /* Touche de couleur */
-    border-radius: 50%;
-    filter: blur(60px); /* Effet flou */
-    opacity: 0.3;
+/* EASTER EGG */
+body.easter-egg-active, body.easter-egg-active * {
+    cursor: url('../assets/fuck.png'), auto !important;
 }
 
 /* ============================================================
-   3. LES ICÔNES DU BUREAU (SHORTCUTS)
+   ICÔNES
    ============================================================ */
 .desktop__shortcut {
-    position: absolute;
-    z-index: 5; /* Au-dessus de la déco */
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-    border: 1px solid transparent;
-    user-select: none;
-    color: var(--text-light); /* Blanc */
+    position: absolute; z-index: 5; width: 100px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; padding: 10px; color: var(--text-light);
 }
 
 .desktop__shortcut:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    border: 1px dashed rgba(255, 255, 255, 0.5); /* Bordure pointillée style "Raw" */
-    border-radius: 4px;
+    border: 1px dashed rgba(255, 255, 255, 0.5); border-radius: 4px;
 }
 
-.desktop__icon {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    margin-bottom: 5px;
-    pointer-events: none;
-}
-
-.desktop__label {
-    font-size: 14px;
-    text-shadow: 2px 2px 0px #000000; /* Ombre noire dure pour lisibilité */
-    line-height: 1.2;
-}
+.desktop__icon { width: 64px; height: 64px; object-fit: contain; margin-bottom: 5px; pointer-events: none; }
+.desktop__label { font-size: 14px; text-shadow: 2px 2px 0px #000000; line-height: 1.2; }
 
 /* ============================================================
-   4. LES FENÊTRES (NOUVEAU STYLE "PLAT & GRIS")
+   FENÊTRES
    ============================================================ */
 .window {
-    width: 500px;
-    height: 400px;
-    background-color: var(--win-bg); /* Gris clair */
-    border: 3px solid var(--win-border); /* Bordure épaisse noire */
-    box-shadow: var(--shadow-hard); /* Ombre nette */
-    
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
-    display: none;
-    flex-direction: column;
-    z-index: 10;
-}
-
-.window.active {
-    display: flex;
-}
-
-/* HEADER (Barre de titre Gris foncé) */
-.window__header {
-    background: linear-gradient(90deg, var(--win-header-start), var(--win-header-end));
-    padding: 8px 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--text-light);
-    font-weight: bold;
-    user-select: none;
-    cursor: move;
-    border-bottom: 3px solid var(--win-border);
-}
-
-.window__close {
-    background: var(--win-bg);
-    border: 2px solid var(--win-border); /* Bordure plate */
-    font-weight: bold;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    color: var(--text-primary);
-}
-
-.window__close:hover {
-    background: #ff4d4d; /* Rouge terne */
-    color: white;
-}
-
-.window__close:active {
-    background: #cc0000;
-}
-
-/* BODY */
-.window__body {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background-color: var(--win-bg);
-    color: var(--text-primary);
-}
-
-hr {
-    border: 0;
-    border-top: 2px solid var(--win-border);
-    margin: 15px 0;
-}
-
-/* ============================================================
-   5. CONTENU INTERNE (FILE GRID)
-   ============================================================ */
-.file-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 15px;
-}
-
-.file-grid__item {
-    width: 90px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-    user-select: none;
-    color: var(--text-primary);
-}
-
-.file-grid__item:hover {
-    background-color: rgba(0,0,0,0.1);
-    border-radius: 4px;
-}
-
-.file-grid__icon {
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-    margin-bottom: 5px;
-    pointer-events: none;
-}
-
-.file-grid__label {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-/* ============================================================
-   6. BARRE DES TÂCHES (TASKBAR)
-   ============================================================ */
-.taskbar {
-    position: fixed;
-    bottom: 0;
-    left: 0px;
-    width: 100%;
-    height: 42px;
-    background-color: var(--taskbar-bg); /* Gris foncé */
-    border-top: 3px solid var(--win-border); /* Bordure noire */
-    display: flex;
-    align-items: center;
-    padding: 4px;
-    z-index: 10000;
-    box-shadow: none; 
-}
-
-/* Le bouton Démarrer */
-.taskbar__start-btn {
-    height: 100%;
-    padding-right: 30px;
-    font-weight: bold;
-    font-size: 14px;
-    display: flex;
-    align-items: center;     
-    justify-content: center; 
-    background: var(--taskbar-btn);
-    color: var(--text-light);
-    border: 2px solid var(--win-border); /* Bordure plate */
-    margin-right: 10px;
-}
-
-.taskbar__start-btn:active, 
-.taskbar__start-btn.active {
-    background: var(--win-border); /* Devient très foncé */
-    color: white;
-    border: 2px solid var(--win-border);
-}
-
-/* L'heure à droite */
-.taskbar__tray {
-    margin-left: auto;
-    background: var(--win-header-end);
-    border: 2px solid var(--win-border);
-    color: var(--text-light);
-    padding: 0 15px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    justify-content: center;
-    min-width: 70px;
-}
-
-/* ============================================================
-   7. MENU DÉMARRER
-   ============================================================ */
-.start-menu {
-    position: absolute;
-    bottom: 42px;
-    left: 0;
-    width: 250px;
+    width: 500px; height: 400px;
     background-color: var(--win-bg);
     border: 3px solid var(--win-border);
     box-shadow: var(--shadow-hard);
-    z-index: 9999;
-    display: none;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    display: none; flex-direction: column; z-index: 10;
 }
 
-.start-menu.visible {
-    display: flex;
+.window.active { display: flex; }
+
+.window__header {
+    background: linear-gradient(90deg, var(--win-header-start), var(--win-header-end));
+    padding: 8px 10px; display: flex; justify-content: space-between;
+    align-items: center; color: var(--text-light); font-weight: bold;
+    user-select: none; cursor: move; border-bottom: 3px solid var(--win-border);
 }
 
-.start-menu__sidebar {
-    width: 40px;
-    background: var(--win-header-end); /* Gris foncé */
-    border-right: 3px solid var(--win-border);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 10px;
+.window__close {
+    background: var(--win-bg); border: 2px solid var(--win-border);
+    width: 24px; height: 24px; display: flex; align-items: center;
+    justify-content: center; font-size: 14px; color: var(--text-primary);
 }
+.window__close:hover { background: #ff4d4d; color: white; }
 
-/* DANS style.css */
-
-.start-menu__name {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    color: var(--text-light);
-    font-weight: bold;
-    font-size: 16px;
-    letter-spacing: 2px;
-    
-    /* === LE RAJOUT C'EST ICI === */
-    margin-top: 20px;    /* Espace "Après" (car le texte est retourné) */
-    margin-bottom: 20px; /* Espace "Avant" */
-    
-    /* Tu peux ajuster 20px selon la taille de l'espace que tu veux */
-}
-
-.start-menu__content {
-    flex: 1;
-    padding: 5px;
-}
-
-.start-menu__item {
-    padding: 10px;
-    user-select: none;
-    color: var(--text-primary);
-    font-weight: bold;
-}
-
-.start-menu__item:hover {
-    background-color: var(--win-header-start);
-    color: white;
+.window__body {
+    flex: 1; padding: 20px; overflow-y: auto;
+    background-color: var(--win-bg); color: var(--text-primary);
 }
 
 /* ============================================================
-   8. RESPONSIVE MOBILE
+   CONTENU (FILE GRID)
+   ============================================================ */
+.file-grid { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 15px; }
+.file-grid__item {
+    width: 90px; display: flex; flex-direction: column; align-items: center;
+    text-align: center; padding: 10px; color: var(--text-primary);
+}
+.file-grid__item:hover { background-color: rgba(0,0,0,0.1); border-radius: 4px; }
+.file-grid__icon { width: 48px; height: 48px; object-fit: contain; margin-bottom: 5px; }
+.file-grid__label { font-size: 12px; font-weight: bold; }
+
+/* ============================================================
+   VISIONNEUSE
+   ============================================================ */
+#win-preview { width: 800px; height: 600px; }
+.preview-body {
+    padding: 0; background-color: #222;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; height: 100%;
+}
+#preview-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+/* ============================================================
+   BARRE DES TÂCHES
+   ============================================================ */
+.taskbar {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 42px;
+    background-color: var(--taskbar-bg); border-top: 3px solid var(--win-border);
+    display: flex; align-items: center; padding: 4px; z-index: 99999;
+}
+
+.taskbar__start-btn {
+    height: 100%; padding: 0 15px; font-weight: bold; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--taskbar-btn); color: var(--text-light);
+    border: 2px solid var(--win-border); margin-right: 10px;
+}
+.taskbar__start-btn:active, .taskbar__start-btn.active {
+    background: var(--win-border); color: white;
+}
+
+.taskbar__tray {
+    margin-left: auto; background: var(--win-header-end);
+    border: 2px solid var(--win-border); color: var(--text-light);
+    padding: 0 15px; height: 100%; display: flex; align-items: center;
+    justify-content: center; min-width: 70px;
+}
+
+/* ============================================================
+   MENU DÉMARRER
+   ============================================================ */
+.start-menu {
+    position: absolute; bottom: 42px; left: 0; width: 250px;
+    background-color: var(--win-bg); border: 3px solid var(--win-border);
+    box-shadow: var(--shadow-hard); z-index: 9999; display: none;
+}
+.start-menu.visible { display: flex; }
+
+.start-menu__sidebar {
+    width: 40px; background: var(--win-header-end);
+    border-right: 3px solid var(--win-border); display: flex;
+    align-items: flex-end; justify-content: center; padding-bottom: 10px;
+}
+.start-menu__name {
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    color: var(--text-light); font-weight: bold; font-size: 16px;
+    letter-spacing: 2px; margin-top: 20px; margin-bottom: 20px;
+}
+.start-menu__content { flex: 1; padding: 5px; }
+.start-menu__item { padding: 10px; color: var(--text-primary); font-weight: bold; }
+.start-menu__item:hover { background-color: var(--win-header-start); color: white; }
+
+/* ============================================================
+   RESPONSIVE
    ============================================================ */
 @media screen and (max-width: 768px) {
-    .taskbar, .start-menu {
-        display: none !important;
-    }
-    
-    .desktop {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(auto-fill, 100px);
-        align-content: start;
-        gap: 10px;
-        padding: 50px 10px;
-    }
-    
-    /* On cache la décoration sur mobile pour la lisibilité */
-    .desktop__layer {
-        display: none;
-    }
-
-    .desktop__shortcut {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        width: 100%;
-        margin: 0;
-    }
-
-    .window {
-        width: 100% !important;
-        height: 100% !important;
-        top: 0 !important;
-        left: 0 !important;
-        transform: none !important;
-        border: none;
-        box-shadow: none;
-    }
-    
-    .window.active {
-        position: fixed;
-        z-index: 9999 !important;
-    }
-
-    .window__header {
-        height: 50px;
-        padding: 0 15px;
-    }
-
-    .window__close {
-        width: 35px;
-        height: 35px;
-        font-size: 20px;
-        border: none;
-        background: transparent;
-        color: var(--text-light);
-    }
-}
-
-/* =========================================
-   STYLE SPÉCIFIQUE : VISIONNEUSE D'IMAGES
-   ========================================= */
-
-/* La fenêtre principale de la visionneuse */
-#win-preview {
-    width: 800px;
-    height: 600px;
-    /* Centrage parfait au milieu de l'écran */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Le corps de la fenêtre (Fond noir) */
-#win-preview .preview-body {
-    padding: 0;
-    background-color: #222; /* Gris très foncé / Noir */
-    display: flex;
-    align-items: center;    /* Centre l'image verticalement */
-    justify-content: center;/* Centre l'image horizontalement */
-    overflow: hidden;       /* Cache ce qui dépasse si besoin */
-    height: 100%;           /* Prend toute la hauteur disponible */
-}
-
-/* L'image à l'intérieur */
-#preview-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; /* L'image garde ses proportions sans être déformée */
-    display: block;
-}
-
-/* RESPONSIVE : Adaptation pour mobile (< 768px) */
-/* On s'assure que la visionneuse ne dépasse pas de l'écran sur téléphone */
-@media screen and (max-width: 768px) {
-    #win-preview {
-        width: 100% !important;
-        height: 100% !important;
-        top: 0 !important;
-        left: 0 !important;
-        transform: none !important;
-    }
+    .taskbar, .start-menu { display: none !important; }
+    .desktop { display: grid; grid-template-columns: repeat(4, 1fr); padding: 50px 10px; }
+    .desktop__shortcut { position: relative !important; top: auto !important; left: auto !important; width: 100%; margin: 0; }
+    .window { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; transform: none !important; }
+    #win-preview { width: 100% !important; height: 100% !important; }
 }

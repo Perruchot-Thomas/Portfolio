@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Portfolio OS</title>
-   <link rel="stylesheet" href="css/style.css">
-    
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
 </head>
 <body>
@@ -13,11 +12,8 @@
     <main class="desktop">
 
         <div class="desktop__layer" style="pointer-events: none;">
-            
-            <img src="" alt="" class="deco-element deco-smiley">
-            
+            <img src="" alt="" class="deco-element deco-smiley"> 
             <div class="deco-element deco-blob"></div>
-
         </div>
 
         <div class="desktop__shortcut" data-target="win-dessins" style="top: 40px; left: 40px;">
@@ -54,15 +50,12 @@
             <div class="window__body">
                 <p>Retrouvez ici mes croquis et recherches graphiques.</p>
                 <hr>
-                
                 <div class="file-grid">
-                    
                     <div class="file-grid__item" data-target="win-pastels">
                         <img src="assets/dossierjaune.png" alt="Dossier" class="file-grid__icon" draggable="false">
                         <p class="file-grid__label">Mes Oeuvres Pastels</p>
                     </div>
-
-                    </div>
+                </div>
             </div>
         </div>
 
@@ -74,7 +67,7 @@
             <div class="window__body">
                 <h2>Mes Pastels</h2>
                 <p>Bienvenue dans la collection pastels.</p>
-                </div>
+            </div>
         </div>
 
         <div id="win-tableaux" class="window">
@@ -86,7 +79,7 @@
                 <h2>Peintures sur toile</h2>
             </div>
         </div>
-        
+
         <div id="win-digital" class="window">
             <div class="window__header">
                 <span class="window__title">Art Digital</span>
@@ -94,10 +87,11 @@
             </div>
             
             <div class="window__body">
-                <p>Double-cliquez pour agrandir.</p>
+                <p>Cliquez sur une image pour l'agrandir.</p>
                 <hr>
 
                 <div class="file-grid">
+                    
                     <div class="file-grid__item">
                         <img src="assets/Nœud Humain.JPG" alt="Nœud Humain" class="file-grid__icon clickable-image">
                         <p class="file-grid__label">Noeud_Humain.jpg</p>
@@ -122,21 +116,20 @@
                         <img src="assets/Cœur d'Épines.JPG" alt="Coeur Epines" class="file-grid__icon clickable-image">
                         <p class="file-grid__label">Coeur_Epines.jpg</p>
                     </div>
-                    
-                     <div class="file-grid__item">
+
+                    <div class="file-grid__item">
                         <img src="assets/Vibration Urbaine.JPG" alt="Vibration" class="file-grid__icon clickable-image">
                         <p class="file-grid__label">Vibration.jpg</p>
                     </div>
-                </div>      
-            </div>
-        </div> <div id="win-about" class="window">
+
+                </div> </div> </div> <div id="win-about" class="window">
             <div class="window__header">
                 <span class="window__title">À Propos</span>
                 <button class="window__close">X</button>
             </div>
             <div class="window__body">
                 <h2>L'artiste</h2>
-                <p>Je suis...</p>
+                <p>Je suis Thomas...</p>
             </div>
         </div>
 
@@ -147,7 +140,7 @@
             </div>
             <div class="window__body">
                 <h2>Me contacter</h2>
-                <p>Email : ...</p>
+                <p>Email : contact@portfolio.com</p>
             </div>
         </div>
 
@@ -160,75 +153,33 @@
                 <img id="preview-img" src="" alt="Aperçu">
             </div>
         </div>
-       
 
-      <div id="win-about" class="window"></div>
-
-        <div id="win-about" class="window">
-            <div class="window__header">
-                <span class="window__title">À Propos</span>
-                <button class="window__close">X</button>
-            </div>
-            <div class="window__body">
-                <h2>L'artiste</h2>
-                <p>Je suis...</p>
-            </div>
-        </div>
-
-        <div id="win-contact" class="window">
-            <div class="window__header">
-                <span class="window__title">Contact</span>
-                <button class="window__close">X</button>
-            </div>
-            <div class="window__body">
-                <h2>Me contacter</h2>
-                <p>Email : ...</p>
-            </div>
-        </div>
-<div id="win-preview" class="window">
-    <div class="window__header">
-        <span class="window__title" id="preview-title">Visionneuse</span>
-        <button class="window__close">X</button>
-    </div>
-    
-    <div class="window__body preview-body">
-        <img id="preview-img" src="" alt="Aperçu">
-    </div>
-</div>
-       
-</div>
-</div>
-
-</div>
-
-        <div id="start-menu" class="start-menu">
-        <div class="start-menu__sidebar">
-            <span class="start-menu__name">Portfolio</span>
-        </div>
-        <div class="start-menu__content">
-            <div class="start-menu__item" onclick="location.reload()">
-            Redémarrer
-            </div>
-            <div class="start-menu__item" id="shutdown-btn">
-            Éteindre
-            </div>
-        </div>
-    </div>
-
-    <div class="taskbar">
         
-        <button class="taskbar__start-btn" id="start-btn">
-            <img src="" alt="" style="width: 20px; margin-right: 5px;">
-            Démarrer
-        </button>
-
-        <div class="taskbar__items"></div>
-
-        <div class="taskbar__tray">
-            <span id="clock">12:00</span>
+        <div id="start-menu" class="start-menu">
+            <div class="start-menu__sidebar">
+                <span class="start-menu__name">Portfolio</span>
+            </div>
+            <div class="start-menu__content">
+                <div class="start-menu__item" onclick="location.reload()">
+                    Redémarrer
+                </div>
+                <div class="start-menu__item" id="shutdown-btn">
+                    Éteindre
+                </div>
+            </div>
         </div>
 
-    </div>
-  </main>
+        <div class="taskbar">
+            <button class="taskbar__start-btn" id="start-btn">
+                <img src="" alt="" style="width: 20px; margin-right: 5px;">
+                Démarrer
+            </button>
+            <div class="taskbar__items"></div>
+            <div class="taskbar__tray">
+                <span id="clock">12:00</span>
+            </div>
+        </div>
+
+    </main>
 </body>
 </html>
