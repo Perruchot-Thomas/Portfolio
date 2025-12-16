@@ -227,70 +227,54 @@ if (shutdownBtn) {
     });
 }
 
-// ==========================================
-// GESTION DES CLICS SPÉCIAUX (Droit & Easter Egg)
-// ==========================================
-
-document.addEventListener('mousedown', (e) => {
-    
-    // CAS 1 : Clic Droit (bouton 2)
-    if (e.button === 2) {
-        document.body.classList.add('right-click-active');
-    }
-
-    // CAS 2 : EASTER EGG (Clic Gauche + touche SHIFT maintenue)
-    // e.button === 0 (Clic gauche)
-    // e.shiftKey === true (Touche Majuscule enfoncée)
-    if (e.button === 0 && e.shiftKey) {
-        // On ajoute la classe CSS spéciale
-        document.body.classList.add('easter-egg-active');
-        console.log("Easter Egg trouvé !"); // Petit message dans la console (F12)
-    }
-});
-
-document.addEventListener('mouseup', () => {
-    // Quand on relâche le clic, on nettoie toutes les classes spéciales
-    document.body.classList.remove('right-click-active');
-    document.body.classList.remove('easter-egg-active');
-});
+// A COLLER À LA FIN DE js/script.js
 
 // ==========================================
 // SYSTÈME DE VISIONNEUSE D'IMAGES
 // ==========================================
 
-// 1. On prépare les éléments
 const previewWindow = document.getElementById('win-preview');
 const previewImg = document.getElementById('preview-img');
 const previewTitle = document.getElementById('preview-title');
 
-// 2. On sélectionne toutes les images qui sont dans les grilles de fichiers
-// (Tu peux cibler plus précisément si tu veux, ex: '#win-digital img')
-const galleryImages = document.querySelectorAll('.file-grid__icon');
+// Fonction pour activer le clic sur les images
+function setupImageGallery() {
+    // On cible toutes les images qui ont la classe 'clickable-image'
+    const galleryImages = document.querySelectorAll('.clickable-image');
 
-galleryImages.forEach(img => {
-    img.addEventListener('click', (e) => {
-        // Si l'image est dans un dossier (a un parent avec data-target), on ne fait rien
-        // (pour éviter d'ouvrir la visionneuse quand on veut juste ouvrir un dossier)
-        if (img.closest('[data-target]')) return;
-
-        e.stopPropagation(); // Empêche les interférences
-
-        // A. On récupère les infos de l'image cliquée
-        const imageSrc = img.src;
-        const imageName = img.alt || "Image";
-
-        // B. On les injecte dans la fenêtre Visionneuse
-        previewImg.src = imageSrc;
-        previewTitle.textContent = "Visionneuse - " + imageName;
-
-        // C. On ouvre la fenêtre
-        if (previewWindow) {
-            previewWindow.classList.add('active');
-            bringToFront(previewWindow); // La met au premier plan
-            
-            // (Optionnel) Centrer la fenêtre à chaque ouverture
-            previewWindow.style.top = '50%';
-            previewWindow.style.left = '50%';
-        }
+    galleryImages.forEach(img => {
+        img.removeEventListener('click', openPreview); // Évite les doublons
+        img.addEventListener('click', openPreview);
     });
-});
+}
+
+function openPreview(e) {
+    e.stopPropagation(); // Empêche le clic de traverser
+    
+    // 1. Récupérer l'image cliquée
+    const imgClicked = e.target;
+    
+    // 2. Mettre sa source dans la fenêtre visionneuse
+    if (previewImg) {
+        previewImg.src = imgClicked.src;
+    }
+
+    // 3. Mettre à jour le titre (Optionnel)
+    if (previewTitle) {
+        // Essaie de trouver le texte en dessous, sinon met "Image"
+        const label = imgClicked.parentElement.querySelector('.file-grid__label');
+        previewTitle.textContent = "Visionneuse - " + (label ? label.innerText : "Image");
+    }
+
+    // 4. Afficher la fenêtre
+    if (previewWindow) {
+        previewWindow.classList.add('active');
+        // Fonction bringToFront déjà présente dans ton code
+        if (typeof bringToFront === "function") {
+            bringToFront(previewWindow);
+        }
+    }
+}
+
+// Lancer la configuration au démarrage
+setupImageGallery();
