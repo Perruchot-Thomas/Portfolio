@@ -229,52 +229,42 @@ if (shutdownBtn) {
 
 // A COLLER À LA FIN DE js/script.js
 
-// ==========================================
-// SYSTÈME DE VISIONNEUSE D'IMAGES
-// ==========================================
+// === 5. VISIONNEUSE D'IMAGES (Galerie) ===
 
 const previewWindow = document.getElementById('win-preview');
 const previewImg = document.getElementById('preview-img');
 const previewTitle = document.getElementById('preview-title');
 
-// Fonction pour activer le clic sur les images
 function setupImageGallery() {
-    // On cible toutes les images qui ont la classe 'clickable-image'
+    // Cible toutes les images avec la classe 'clickable-image'
     const galleryImages = document.querySelectorAll('.clickable-image');
 
     galleryImages.forEach(img => {
-        img.removeEventListener('click', openPreview); // Évite les doublons
+        // On nettoie les anciens écouteurs pour éviter les doublons
+        img.removeEventListener('click', openPreview);
         img.addEventListener('click', openPreview);
     });
 }
 
 function openPreview(e) {
-    e.stopPropagation(); // Empêche le clic de traverser
-    
-    // 1. Récupérer l'image cliquée
+    e.stopPropagation(); // Empêche de sélectionner le dossier en dessous
     const imgClicked = e.target;
     
-    // 2. Mettre sa source dans la fenêtre visionneuse
-    if (previewImg) {
-        previewImg.src = imgClicked.src;
-    }
+    // 1. Mettre l'image dans la visionneuse
+    if (previewImg) previewImg.src = imgClicked.src;
 
-    // 3. Mettre à jour le titre (Optionnel)
+    // 2. Mettre à jour le titre
     if (previewTitle) {
-        // Essaie de trouver le texte en dessous, sinon met "Image"
         const label = imgClicked.parentElement.querySelector('.file-grid__label');
         previewTitle.textContent = "Visionneuse - " + (label ? label.innerText : "Image");
     }
 
-    // 4. Afficher la fenêtre
+    // 3. Ouvrir la fenêtre
     if (previewWindow) {
         previewWindow.classList.add('active');
-        // Fonction bringToFront déjà présente dans ton code
-        if (typeof bringToFront === "function") {
-            bringToFront(previewWindow);
-        }
+        bringToFront(previewWindow);
     }
 }
 
-// Lancer la configuration au démarrage
+// On lance la détection des images au chargement
 setupImageGallery();

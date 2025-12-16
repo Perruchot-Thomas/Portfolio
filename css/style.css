@@ -30,7 +30,7 @@
 
 
 body {
-    cursor: url('/assets/curseur\ copie.png'), auto;
+    cursor: url('../assets/curseur\ copie.png'), auto;
     overflow: hidden; 
     height: 100vh; 
     width: 100vw;
@@ -39,12 +39,12 @@ body {
 
 /* Éléments cliquables */
 button, a, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__item, .taskbar__start-btn {
-    cursor: url('/assets/curseur\ copie.png'), pointer;
+    cursor: url('../assets/curseur\ copie.png'), pointer;
 }
 
 /* Curseur Clic Actif */
 *:active {
-    cursor: url('/assets/curseur\ point.png'), auto !important;
+    cursor: url('../assets/curseur\ point.png'), auto !important;
 }
 
 /* ============================================================
@@ -57,7 +57,7 @@ button, a, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__it
     
     /* TON FOND D'ÉCRAN ORIGINAL */
     background-color: #5D8AA8; /* Couleur de secours */
-    background-image: url('/assets/fond.jpeg'); 
+    background-image: url('../assets/fond.jpeg'); 
     background-size: cover;       
     background-position: center;  
     background-repeat: no-repeat;
@@ -421,5 +421,50 @@ hr {
         border: none;
         background: transparent;
         color: var(--text-light);
+    }
+}
+
+/* =========================================
+   STYLE SPÉCIFIQUE : VISIONNEUSE D'IMAGES
+   ========================================= */
+
+/* La fenêtre principale de la visionneuse */
+#win-preview {
+    width: 800px;
+    height: 600px;
+    /* Centrage parfait au milieu de l'écran */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Le corps de la fenêtre (Fond noir) */
+#win-preview .preview-body {
+    padding: 0;
+    background-color: #222; /* Gris très foncé / Noir */
+    display: flex;
+    align-items: center;    /* Centre l'image verticalement */
+    justify-content: center;/* Centre l'image horizontalement */
+    overflow: hidden;       /* Cache ce qui dépasse si besoin */
+    height: 100%;           /* Prend toute la hauteur disponible */
+}
+
+/* L'image à l'intérieur */
+#preview-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* L'image garde ses proportions sans être déformée */
+    display: block;
+}
+
+/* RESPONSIVE : Adaptation pour mobile (< 768px) */
+/* On s'assure que la visionneuse ne dépasse pas de l'écran sur téléphone */
+@media screen and (max-width: 768px) {
+    #win-preview {
+        width: 100% !important;
+        height: 100% !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
     }
 }
