@@ -28,13 +28,6 @@
     font-family: 'Courier New', Courier, monospace; /* Police rétro conservée */
 }
 
-body.easter-egg-active,
-body.easter-egg-active * {
-    /* Le !important est vital pour écraser le curseur de clic normal (:active) */
-    cursor: url('/assets/fuck.png'), auto !important;
-    /* Optionnel : un petit effet visuel en plus pour montrer que c'est spécial */
-    /* filter: invert(1); (Inverser les couleurs du site pendant le clic) */
-}
 
 body {
     cursor: url('/assets/curseur\ copie.png'), auto;
@@ -257,9 +250,9 @@ hr {
    6. BARRE DES TÂCHES (TASKBAR)
    ============================================================ */
 .taskbar {
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    left: 0;
+    left: 0px;
     width: 100%;
     height: 42px;
     background-color: var(--taskbar-bg); /* Gris foncé */
@@ -268,17 +261,18 @@ hr {
     align-items: center;
     padding: 4px;
     z-index: 10000;
-    box-shadow: none; /* Plus d'ombre portée, style plat */
+    box-shadow: none; 
 }
 
 /* Le bouton Démarrer */
 .taskbar__start-btn {
     height: 100%;
-    padding: 0 15px;
+    padding-right: 30px;
     font-weight: bold;
     font-size: 14px;
     display: flex;
-    align-items: center;
+    align-items: center;     
+    justify-content: center; 
     background: var(--taskbar-btn);
     color: var(--text-light);
     border: 2px solid var(--win-border); /* Bordure plate */

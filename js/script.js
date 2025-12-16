@@ -254,5 +254,43 @@ document.addEventListener('mouseup', () => {
     document.body.classList.remove('easter-egg-active');
 });
 
-// OPTIONNEL : Bloquer le menu contextuel (si tu l'avais déjà)
-document.addEventListener('contextmenu', (e) => e.preventDefault());
+// ==========================================
+// SYSTÈME DE VISIONNEUSE D'IMAGES
+// ==========================================
+
+// 1. On prépare les éléments
+const previewWindow = document.getElementById('win-preview');
+const previewImg = document.getElementById('preview-img');
+const previewTitle = document.getElementById('preview-title');
+
+// 2. On sélectionne toutes les images qui sont dans les grilles de fichiers
+// (Tu peux cibler plus précisément si tu veux, ex: '#win-digital img')
+const galleryImages = document.querySelectorAll('.file-grid__icon');
+
+galleryImages.forEach(img => {
+    img.addEventListener('click', (e) => {
+        // Si l'image est dans un dossier (a un parent avec data-target), on ne fait rien
+        // (pour éviter d'ouvrir la visionneuse quand on veut juste ouvrir un dossier)
+        if (img.closest('[data-target]')) return;
+
+        e.stopPropagation(); // Empêche les interférences
+
+        // A. On récupère les infos de l'image cliquée
+        const imageSrc = img.src;
+        const imageName = img.alt || "Image";
+
+        // B. On les injecte dans la fenêtre Visionneuse
+        previewImg.src = imageSrc;
+        previewTitle.textContent = "Visionneuse - " + imageName;
+
+        // C. On ouvre la fenêtre
+        if (previewWindow) {
+            previewWindow.classList.add('active');
+            bringToFront(previewWindow); // La met au premier plan
+            
+            // (Optionnel) Centrer la fenêtre à chaque ouverture
+            previewWindow.style.top = '50%';
+            previewWindow.style.left = '50%';
+        }
+    });
+});
