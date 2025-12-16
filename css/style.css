@@ -1,127 +1,178 @@
 /* ============================================================
+   PALETTE DE COULEURS (DA "Ternes & Gris")
+   ============================================================ */
+:root {
+    --bg-desktop: #2a2a2a;      /* Gris très foncé (Fond du bureau) */
+    
+    --win-bg: #e0e0e0;          /* Gris clair (Intérieur fenêtre) */
+    --win-header-start: #000000;/* Gris moyen (Titre dégradé début) */
+    --win-header-end: #2e2e2e;  /* Gris foncé (Titre dégradé fin) */
+    --win-border: #1a1a1a;      /* Bordures presque noires (Style Flat) */
+    
+    --taskbar-bg: #3f3f3f;      /* Gris moyen foncé (Barre des tâches) */
+    --taskbar-btn: #525252;     /* Gris bouton */
+
+    --text-primary: #1a1a1a;    /* Noir (Texte principal) */
+    --text-light: #ffffff;      /* Blanc (Texte sur fond sombre) */
+    
+    --shadow-hard: 8px 8px 0px rgba(0, 0, 0, 0.4); /* Ombre nette "Brutale" */
+}
+
+/* ============================================================
    1. RESET & CONFIGURATION GLOBALE
    ============================================================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Courier New', Courier, monospace; /* Police style rétro */
+    font-family: 'Courier New', Courier, monospace; /* Police rétro conservée */
 }
 
-/* GESTION DES CURSEURS */
+/* GESTION DES CURSEURS (Tes chemins conservés) */
 body {
-    /* Curseur par défaut (Flèche) */
-    cursor: url('assets/cursor-arrow.png'), auto;
-    
-    /* Configuration de l'écran */
-    overflow: hidden; /* Empêche de scroller sur le bureau */
-    height: 100vh;
+    cursor: url('/assets/curseur\ copie.png'), auto;
+    overflow: hidden; 
+    height: 100vh; 
     width: 100vw;
+    background-color: var(--bg-desktop); /* Application du fond gris foncé */
 }
 
-/* Curseur Interactif (Main) pour les éléments cliquables */
-button, a, .desktop__shortcut, .file-grid__item, .window__close {
-    cursor: url('assets/cursor-hand.png'), pointer;
+/* Éléments cliquables */
+button, a, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__item, .taskbar__start-btn {
+    cursor: url('/assets/curseur\ copie.png'), pointer;
 }
 
-/* Curseur "CLIC" (Actif) - S'applique partout quand on clique */
+/* Curseur Clic Actif */
 *:active {
-    cursor: url('assets/cursor-click.png'), auto !important;
+    cursor: url('/assets/curseur\ point.png'), auto !important;
 }
 
 /* ============================================================
-   2. LE BUREAU (DESKTOP)
+   2. LE BUREAU (DESKTOP) & DÉCORATION
    ============================================================ */
 .desktop {
     width: 100%;
     height: 100%;
-    position: relative; /* Référence pour les éléments absolute */
-
-    /* FOND D'ÉCRAN */
+    position: relative;
+    
+    /* TON FOND D'ÉCRAN ORIGINAL */
     background-color: #5D8AA8; /* Couleur de secours */
-    background-image: url('assets/wallpaper.jpg'); /* Ton image de fond */
-    background-size: cover;       /* Remplit tout l'écran */
-    background-position: center;  /* Centré */
+    background-image: url('/assets/fond.jpeg'); 
+    background-size: cover;       
+    background-position: center;  
     background-repeat: no-repeat;
+}
+
+/* COUCHE DE DÉCORATION (Pour le Smiley et les formes) */
+.desktop__layer {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1; /* Derrière les icônes, devant le fond */
+    overflow: hidden;
+}
+
+.deco-element {
+    position: absolute;
+    opacity: 0.9; 
+}
+
+/* Style du Smiley */
+.deco-smiley {
+    top: 15%; 
+    left: 20%;
+    width: 200px; /* Ajuste la taille */
+    transform: rotate(-10deg);
+    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
+}
+
+/* Style de la tache de couleur (optionnel) */
+.deco-blob {
+    bottom: 100px; right: 100px;
+    width: 300px; height: 300px;
+    background: linear-gradient(45deg, #ff0055, #ffcc00); /* Touche de couleur */
+    border-radius: 50%;
+    filter: blur(60px); /* Effet flou */
+    opacity: 0.3;
 }
 
 /* ============================================================
    3. LES ICÔNES DU BUREAU (SHORTCUTS)
    ============================================================ */
 .desktop__shortcut {
-    position: absolute; /* Placement libre sur PC */
-    width: 100px;       /* Largeur de la zone cliquable */
+    position: absolute;
+    z-index: 5; /* Au-dessus de la déco */
+    width: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 10px;
     border: 1px solid transparent;
-    user-select: none;  /* Empêche de sélectionner le texte en glissant */
-    color: white;       /* Texte en blanc */
+    user-select: none;
+    color: var(--text-light); /* Blanc */
 }
 
 .desktop__shortcut:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Fond semi-transparent au survol */
-    border: 1px dotted rgba(255, 255, 255, 0.5);
-    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px dashed rgba(255, 255, 255, 0.5); /* Bordure pointillée style "Raw" */
+    border-radius: 4px;
 }
 
 .desktop__icon {
-    width: 64px;        /* Taille de ton image PNG */
+    width: 64px;
     height: 64px;
     object-fit: contain;
     margin-bottom: 5px;
-    pointer-events: none; /* Important : le clic traverse l'image */
+    pointer-events: none;
 }
 
 .desktop__label {
     font-size: 14px;
-    text-shadow: 1px 1px 3px black; /* Ombre pour lire sur n'importe quel fond */
+    text-shadow: 2px 2px 0px #000000; /* Ombre noire dure pour lisibilité */
     line-height: 1.2;
 }
 
 /* ============================================================
-   4. LES FENÊTRES (WINDOWS)
+   4. LES FENÊTRES (NOUVEAU STYLE "PLAT & GRIS")
    ============================================================ */
 .window {
     width: 500px;
     height: 400px;
-    background-color: #ece9d8; /* Gris clair style Windows 98 */
-    border: 2px solid #000;
-    box-shadow: 8px 8px 0px rgba(0,0,0,0.5); /* Ombre portée rétro */
+    background-color: var(--win-bg); /* Gris clair */
+    border: 3px solid var(--win-border); /* Bordure épaisse noire */
+    box-shadow: var(--shadow-hard); /* Ombre nette */
     
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centré par défaut */
+    transform: translate(-50%, -50%);
     
-    display: none; /* Caché par défaut */
+    display: none;
     flex-direction: column;
     z-index: 10;
 }
 
-/* Classe ajoutée par JS pour afficher la fenêtre */
 .window.active {
     display: flex;
 }
 
-/* HEADER (Barre de titre bleue) */
+/* HEADER (Barre de titre Gris foncé) */
 .window__header {
-    background: linear-gradient(90deg, #000080, #1084d0);
-    padding: 6px 10px;
+    background: linear-gradient(90deg, var(--win-header-start), var(--win-header-end));
+    padding: 8px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: white;
+    color: var(--text-light);
     font-weight: bold;
     user-select: none;
-    cursor: move; /* Curseur spécial déplacement */
+    cursor: move;
+    border-bottom: 3px solid var(--win-border);
 }
 
 .window__close {
-    background: #c0c0c0;
-    border: 2px outset #ffffff;
+    background: var(--win-bg);
+    border: 2px solid var(--win-border); /* Bordure plate */
     font-weight: bold;
     width: 24px;
     height: 24px;
@@ -129,30 +180,35 @@ button, a, .desktop__shortcut, .file-grid__item, .window__close {
     align-items: center;
     justify-content: center;
     font-size: 14px;
-    color: black;
+    color: var(--text-primary);
+}
+
+.window__close:hover {
+    background: #ff4d4d; /* Rouge terne */
+    color: white;
 }
 
 .window__close:active {
-    border: 2px inset #ffffff; /* Effet bouton enfoncé */
+    background: #cc0000;
 }
 
-/* BODY (Contenu de la fenêtre) */
+/* BODY */
 .window__body {
-    flex: 1; /* Prend tout l'espace restant */
+    flex: 1;
     padding: 20px;
-    overflow-y: auto; /* Scroll interne si trop de contenu */
-    background-color: white;
-    color: black;
+    overflow-y: auto;
+    background-color: var(--win-bg);
+    color: var(--text-primary);
 }
 
 hr {
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 2px solid var(--win-border);
     margin: 15px 0;
 }
 
 /* ============================================================
-   5. CONTENU INTERNE (FILE GRID - Sous-dossiers)
+   5. CONTENU INTERNE (FILE GRID)
    ============================================================ */
 .file-grid {
     display: flex;
@@ -169,15 +225,16 @@ hr {
     text-align: center;
     padding: 10px;
     user-select: none;
+    color: var(--text-primary);
 }
 
 .file-grid__item:hover {
-    background-color: #e8f0ff; /* Bleu très clair au survol */
-    border-radius: 5px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 4px;
 }
 
 .file-grid__icon {
-    width: 48px; /* Un peu plus petit que sur le bureau */
+    width: 48px;
     height: 48px;
     object-fit: contain;
     margin-bottom: 5px;
@@ -186,25 +243,148 @@ hr {
 
 .file-grid__label {
     font-size: 12px;
-    color: #333;
+    font-weight: bold;
 }
 
 /* ============================================================
-   6. RESPONSIVE MOBILE (Écrans < 768px)
+   6. BARRE DES TÂCHES (TASKBAR)
+   ============================================================ */
+.taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 42px;
+    background-color: var(--taskbar-bg); /* Gris foncé */
+    border-top: 3px solid var(--win-border); /* Bordure noire */
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    z-index: 10000;
+    box-shadow: none; /* Plus d'ombre portée, style plat */
+}
+
+/* Le bouton Démarrer */
+.taskbar__start-btn {
+    height: 100%;
+    padding: 0 15px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    background: var(--taskbar-btn);
+    color: var(--text-light);
+    border: 2px solid var(--win-border); /* Bordure plate */
+    margin-right: 10px;
+}
+
+.taskbar__start-btn:active, 
+.taskbar__start-btn.active {
+    background: var(--win-border); /* Devient très foncé */
+    color: white;
+    border: 2px solid var(--win-border);
+}
+
+/* L'heure à droite */
+.taskbar__tray {
+    margin-left: auto;
+    background: var(--win-header-end);
+    border: 2px solid var(--win-border);
+    color: var(--text-light);
+    padding: 0 15px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    justify-content: center;
+    min-width: 70px;
+}
+
+/* ============================================================
+   7. MENU DÉMARRER
+   ============================================================ */
+.start-menu {
+    position: absolute;
+    bottom: 42px;
+    left: 0;
+    width: 250px;
+    background-color: var(--win-bg);
+    border: 3px solid var(--win-border);
+    box-shadow: var(--shadow-hard);
+    z-index: 9999;
+    display: none;
+}
+
+.start-menu.visible {
+    display: flex;
+}
+
+.start-menu__sidebar {
+    width: 40px;
+    background: var(--win-header-end); /* Gris foncé */
+    border-right: 3px solid var(--win-border);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+/* DANS style.css */
+
+.start-menu__name {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    color: var(--text-light);
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 2px;
+    
+    /* === LE RAJOUT C'EST ICI === */
+    margin-top: 20px;    /* Espace "Après" (car le texte est retourné) */
+    margin-bottom: 20px; /* Espace "Avant" */
+    
+    /* Tu peux ajuster 20px selon la taille de l'espace que tu veux */
+}
+
+.start-menu__content {
+    flex: 1;
+    padding: 5px;
+}
+
+.start-menu__item {
+    padding: 10px;
+    user-select: none;
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.start-menu__item:hover {
+    background-color: var(--win-header-start);
+    color: white;
+}
+
+/* ============================================================
+   8. RESPONSIVE MOBILE
    ============================================================ */
 @media screen and (max-width: 768px) {
+    .taskbar, .start-menu {
+        display: none !important;
+    }
     
-    /* Le bureau devient une grille d'applications */
     .desktop {
         display: grid;
-        grid-template-columns: repeat(4, 1fr); /* 4 colonnes */
+        grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(auto-fill, 100px);
         align-content: start;
         gap: 10px;
-        padding: 50px 10px; /* Marge en haut */
+        padding: 50px 10px;
+    }
+    
+    /* On cache la décoration sur mobile pour la lisibilité */
+    .desktop__layer {
+        display: none;
     }
 
-    /* On force la position relative (annule le Drag & Drop visuellement) */
     .desktop__shortcut {
         position: relative !important;
         top: auto !important;
@@ -212,12 +392,7 @@ hr {
         width: 100%;
         margin: 0;
     }
-    
-    .desktop__label {
-        font-size: 11px;
-    }
 
-    /* Les fenêtres deviennent PLEIN ÉCRAN */
     .window {
         width: 100% !important;
         height: 100% !important;
@@ -229,12 +404,12 @@ hr {
     }
     
     .window.active {
-        position: fixed; /* Fixe par dessus tout */
+        position: fixed;
         z-index: 9999 !important;
     }
 
     .window__header {
-        height: 50px; /* Plus haut pour les doigts */
+        height: 50px;
         padding: 0 15px;
     }
 
@@ -242,5 +417,8 @@ hr {
         width: 35px;
         height: 35px;
         font-size: 20px;
+        border: none;
+        background: transparent;
+        color: var(--text-light);
     }
 }

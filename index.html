@@ -11,35 +11,43 @@
 
     <main class="desktop">
 
+        <div class="desktop__layer" style="pointer-events: none;">
+            
+            <img src="" alt="" class="deco-element deco-smiley">
+            
+            <div class="deco-element deco-blob"></div>
+
+        </div>
+
         <div class="desktop__shortcut" data-target="win-dessins" style="top: 40px; left: 40px;">
-            <img src="/" alt="Dossier" class="desktop__icon" draggable="false">
+            <img src="/assets/dossierjaune.png" alt="Dossier" class="desktop__icon" draggable="false">
             <p class="desktop__label">Carnet de<br>Dessins</p>
         </div>
 
         <div class="desktop__shortcut" data-target="win-tableaux" style="top: 40px; left: 150px;">
-            <img src="/assets/dossier.png" alt="Tableaux" class="desktop__icon" draggable="false">
+            <img src="/assets/dossierjaune.png" alt="Tableaux" class="desktop__icon" draggable="false">
             <p class="desktop__label">Tableaux</p>
         </div>
 
         <div class="desktop__shortcut" data-target="win-digital" style="top: 150px; left: 40px;">
-            <img src="/assets/dossier.png" alt="Digital" class="desktop__icon" draggable="false">
+            <img src="/assets/dossierjaune.png" alt="Digital" class="desktop__icon" draggable="false">
             <p class="desktop__label">Oeuvres<br>Digitales</p>
         </div>
 
         <div class="desktop__shortcut" data-target="win-about" style="top: 150px; left: 150px;">
-            <img src="/assets/dossier.png" alt="Info" class="desktop__icon" draggable="false">
+            <img src="/assets/dossierjaune.png" alt="Info" class="desktop__icon" draggable="false">
             <p class="desktop__label">À Propos</p>
         </div>
 
         <div class="desktop__shortcut" data-target="win-contact" style="top: 260px; left: 40px;">
-            <img src="/assets/fichier a propos.png" alt="Contact" class="desktop__icon" draggable="false">
+            <img src="/assets/dossierjaune.png" alt="Contact" class="desktop__icon" draggable="false">
             <p class="desktop__label">Contact</p>
         </div>
 
 
         <div id="win-dessins" class="window">
             <div class="window__header">
-                <span class="window__title">📓 Carnet de Dessins</span>
+                <span class="window__title">Carnet de Dessins</span>
                 <button class="window__close">X</button>
             </div>
             <div class="window__body">
@@ -49,7 +57,7 @@
                 <div class="file-grid">
                     
                     <div class="file-grid__item" data-target="win-pastels">
-                        <img src="/assets/dossier.png" alt="Dossier" class="file-grid__icon" draggable="false">
+                        <img src="/assets/dossierjaune.png" alt="Dossier" class="file-grid__icon" draggable="false">
                         <p class="file-grid__label">Mes Oeuvres Pastels</p>
                     </div>
 
@@ -59,7 +67,7 @@
 
         <div id="win-pastels" class="window" style="top: 55%; left: 55%;">
             <div class="window__header">
-                <span class="window__title">🖍️ Oeuvres Pastels</span>
+                <span class="window__title">Oeuvres Pastels</span>
                 <button class="window__close">X</button>
             </div>
             <div class="window__body">
@@ -70,7 +78,7 @@
 
         <div id="win-tableaux" class="window">
             <div class="window__header">
-                <span class="window__title">🎨 Tableaux</span>
+                <span class="window__title">Tableaux</span>
                 <button class="window__close">X</button>
             </div>
             <div class="window__body">
@@ -80,7 +88,7 @@
 
         <div id="win-digital" class="window">
             <div class="window__header">
-                <span class="window__title">💻 Art Digital</span>
+                <span class="window__title">Art Digital</span>
                 <button class="window__close">X</button>
             </div>
             <div class="window__body">
@@ -90,7 +98,7 @@
 
         <div id="win-about" class="window">
             <div class="window__header">
-                <span class="window__title">👀 À Propos</span>
+                <span class="window__title">À Propos</span>
                 <button class="window__close">X</button>
             </div>
             <div class="window__body">
@@ -101,7 +109,7 @@
 
         <div id="win-contact" class="window">
             <div class="window__header">
-                <span class="window__title">📫 Contact</span>
+                <span class="window__title">Contact</span>
                 <button class="window__close">X</button>
             </div>
             <div class="window__body">
@@ -110,7 +118,35 @@
             </div>
         </div>
 
-    </main>
+        <div id="start-menu" class="start-menu">
+        <div class="start-menu__sidebar">
+            <span class="start-menu__name">Portfolio</span>
+        </div>
+        <div class="start-menu__content">
+            <div class="start-menu__item" onclick="location.reload()">
+            Redémarrer
+            </div>
+            <div class="start-menu__item" id="shutdown-btn">
+            Éteindre
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        
+        <button class="taskbar__start-btn" id="start-btn">
+            <img src="" alt="" style="width: 20px; margin-right: 5px;">
+            Démarrer
+        </button>
+
+        <div class="taskbar__items"></div>
+
+        <div class="taskbar__tray">
+            <span id="clock">12:00</span>
+        </div>
+
+    </div>
+  </main>
 
     <script src="script.js"></script>
 </body>

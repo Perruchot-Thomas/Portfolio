@@ -81,23 +81,148 @@ windows.forEach(win => {
 
 // 3. GESTION DE L'OUVERTURE (Système universel)
 // Ça marche pour les icônes du bureau ET les icônes dans les dossiers
+// ... (Garde tout le début de ton script : variables, bringToFront, makeDraggable...) ...
+
+// ==========================================
+// 3. GESTION DE L'OUVERTURE (Intelligente)
+// ==========================================
+
+// Petite fonction pour ouvrir la fenêtre (pour ne pas répéter le code)
+function openWindowFromTrigger(trigger) {
+    const targetId = trigger.getAttribute('data-target');
+    const targetWindow = document.getElementById(targetId);
+
+    if (targetWindow) {
+        targetWindow.classList.add('active');
+        bringToFront(targetWindow);
+    }
+}
+
+// On sélectionne tous les éléments qui doivent ouvrir quelque chose
 const allTriggers = document.querySelectorAll('[data-target]');
 
 allTriggers.forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
-        // Empêche le bug où le clic traverse parfois les éléments
-        e.stopPropagation();
-
-        // On récupère l'ID de la fenêtre à ouvrir
-        const targetId = trigger.getAttribute('data-target');
-        const targetWindow = document.getElementById(targetId);
-
-        if (targetWindow) {
-            targetWindow.classList.add('active'); // Affiche la fenêtre
-            bringToFront(targetWindow);           // La met devant
-            
-            // Note : Le centrage initial est géré par le CSS (top: 50%, left: 50%)
-            // Le Drag & Drop mettra à jour ces valeurs ensuite.
+    
+    // CAS 1 : SUR ORDINATEUR (> 768px)
+    // On utilise le DOUBLE CLIC ('dblclick').
+    // Ainsi, un simple clic ou un déplacement ne déclenchera rien.
+    trigger.addEventListener('dblclick', (e) => {
+        if (window.innerWidth > 768) {
+            e.stopPropagation();
+            openWindowFromTrigger(trigger);
         }
     });
+
+    // CAS 2 : SUR MOBILE (<= 768px)
+    // On garde le SIMPLE CLIC ('click') car on ne peut pas "drag & drop" 
+    // sur la version mobile (grâce au CSS) et le double tap est désagréable.
+    trigger.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+            e.stopPropagation();
+            openWindowFromTrigger(trigger);
+        }
+    });
+    
+    // OPTIONNEL : Si tu veux que le curseur change en "main" seulement au survol
+    // et pas pendant le drag, le CSS le gère déjà.
 });
+
+// ... (Garde la gestion du Clic Droit à la fin si tu l'as mise) ...
+
+// ... Ton code précédent ...
+
+// ==========================================
+// 5. GESTION DE LA BARRE DES TÂCHES
+// ==========================================
+
+// --- HORLOGE ---
+function updateClock() {
+    const now = new Date();
+    // On formate l'heure pour avoir toujours 2 chiffres (ex: 09:05)
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    
+    const clockElement = document.getElementById('clock');
+    if (clockElement) {
+        clockElement.textContent = `${hours}:${minutes}`;
+    }
+}
+
+// Lancer l'horloge tout de suite
+updateClock();
+// Mettre à jour toutes les secondes (1000ms)
+setInterval(updateClock, 1000);
+
+
+// --- MENU DÉMARRER ---
+const startBtn = document.getElementById('start-btn');
+const startMenu = document.getElementById('start-menu');
+
+if (startBtn && startMenu) {
+    startBtn.addEventListener('click', (e) => {
+        // Empêche le clic de se propager au bureau (sinon ça fermerait tout de suite)
+        e.stopPropagation();
+        
+        // Toggle (Affiche / Cache)
+        startMenu.classList.toggle('visible');
+        startBtn.classList.toggle('active'); // Garde le bouton enfoncé visuellement
+    });
+
+    // Fermer le menu si on clique n'importe où ailleurs sur le bureau
+    document.addEventListener('click', (e) => {
+        // Si on clique en dehors du menu et du bouton
+        if (!startMenu.contains(e.target) && e.target !== startBtn) {
+            startMenu.classList.remove('visible');
+            startBtn.classList.remove('active');
+        }
+    });
+}
+
+// ==========================================
+// GESTION DE L'EXTINCTION (Simulée)
+// ==========================================
+
+const shutdownBtn = document.getElementById('shutdown-btn');
+
+if (shutdownBtn) {
+    shutdownBtn.addEventListener('click', () => {
+        
+        // 1. On crée un écran noir
+        const blackScreen = document.createElement('div');
+        
+        // 2. On lui donne le style "Plein écran" via JS
+        Object.assign(blackScreen.style, {
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'black',
+            zIndex: '999999', // Au-dessus de TOUT
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: 'white',
+            fontFamily: "'Courier New', Courier, monospace"
+        });
+
+        // 3. Le message à afficher
+        blackScreen.innerHTML = `
+            <h1 style="margin-bottom: 20px;">Arrêt du système...</h1>
+            <p style="font-size: 14px; opacity: 0.7;">Vous pouvez maintenant fermer cette page.</p>
+        `;
+
+        // 4. On l'ajoute à la page
+        document.body.appendChild(blackScreen);
+
+        // 5. On tente quand même de fermer la fenêtre (ça marchera dans de rares cas)
+        setTimeout(() => {
+            try {
+                window.close();
+            } catch (e) {
+                console.log("Le navigateur a empêché la fermeture automatique.");
+            }
+        }, 1000);
+    });
+}
