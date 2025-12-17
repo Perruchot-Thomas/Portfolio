@@ -1,14 +1,35 @@
 /* ============================================================
-   PORTFOLIO OS - SCRIPT COMPLET (CORRIGÉ)
+   PORTFOLIO OS - SCRIPT COMPLET
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
     
+    // === 0. CONFIGURATION MUSIQUE (Basé sur tes uploads) ===
+    const songs = [
+        {
+            title: "Piste Audio 2",
+            artist: "Artiste Inconnu",
+            src: "assets/music/song2.mp3",
+            cover: "assets/cover2.jpg"
+        },
+        {
+            title: "Piste Audio 3",
+            artist: "Artiste Inconnu",
+            src: "assets/music/song3.mp3",
+            cover: "assets/cover3.jpg"
+        },
+         {
+            title: "Piste Audio 1",
+            artist: "Artiste Inconnu",
+            src: "assets/music/song1.mp3", 
+            cover: "assets/cover1.jpg"
+        }
+    ];
+
     // === VARIABLES GLOBALES ===
     let highestZIndex = 100;
 
-    // === 1. FONCTIONS UTILITAIRES (Z-Index et Drag & Drop) ===
-    
+    // === 1. FONCTIONS UTILITAIRES ===
     function bringToFront(element) {
         highestZIndex++;
         element.style.zIndex = highestZIndex;
@@ -17,14 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function makeDraggable(element, handle) {
         let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
         const dragHandle = handle || element;
-        
         dragHandle.onmousedown = dragMouseDown;
 
         function dragMouseDown(e) {
             bringToFront(element);
             pos3 = e.clientX;
             pos4 = e.clientY;
-            // On écoute le mouvement sur tout le document
             document.onmouseup = closeDragElement;
             document.onmousemove = elementDrag;
         }
@@ -45,42 +64,88 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // === 2. INITIALISATION DES FENÊTRES ET ICÔNES ===
-    
-    // Rendre les icônes du bureau déplaçables
+    // === 2. INITIALISATION ===
     const desktopShortcuts = document.querySelectorAll('.desktop__shortcut');
     desktopShortcuts.forEach(shortcut => makeDraggable(shortcut));
 
-    // Rendre les fenêtres déplaçables via leur barre de titre
     const windows = document.querySelectorAll('.window');
     windows.forEach(win => {
         const header = win.querySelector('.window__header');
         if(header) makeDraggable(win, header);
-        
-        // Passer au premier plan quand on clique dessus
         win.addEventListener('mousedown', () => bringToFront(win));
-        
-        // Gestion du bouton Fermer (X)
         const closeBtn = win.querySelector('.window__close');
         if (closeBtn) {
             closeBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Évite les conflits
+                e.stopPropagation();
                 win.classList.remove('active');
             });
         }
     });
 
-    // === 3. GESTION DE L'OUVERTURE DES DOSSIERS ===
-    
+    const musicPlayer = document.querySelector('.music-player');
+    const musicHeader = document.querySelector('.music-player__header');
+    if(musicPlayer && musicHeader) {
+        makeDraggable(musicPlayer, musicHeader);
+        musicPlayer.addEventListener('mousedown', () => bringToFront(musicPlayer));
+    }
+
+    // === 3. LECTEUR AUDIO ===
+    const audio = document.getElementById('audio');
+    const title = document.getElementById('music-title');
+    const artist = document.getElementById('music-artist');
+    const cover = document.getElementById('music-cover');
+    const playBtn = document.getElementById('play-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    let songIndex = 0;
+
+    function loadSong(song) {
+        if(!song) return;
+        title.innerText = song.title;
+        artist.innerText = song.artist;
+        audio.src = song.src;
+        cover.src = song.cover;
+    }
+
+    if(songs.length > 0) loadSong(songs[songIndex]);
+
+    function playSong() {
+        playBtn.innerText = "⏸";
+        audio.play();
+    }
+    function pauseSong() {
+        playBtn.innerText = "▶";
+        audio.pause();
+    }
+    function prevSong() {
+        songIndex--;
+        if (songIndex < 0) songIndex = songs.length - 1;
+        loadSong(songs[songIndex]);
+        playSong();
+    }
+    function nextSong() {
+        songIndex++;
+        if (songIndex > songs.length - 1) songIndex = 0;
+        loadSong(songs[songIndex]);
+        playSong();
+    }
+
+    if(playBtn) playBtn.addEventListener('click', () => {
+        if(audio.paused) playSong();
+        else pauseSong();
+    });
+    if(prevBtn) prevBtn.addEventListener('click', prevSong);
+    if(nextBtn) nextBtn.addEventListener('click', nextSong);
+    if(audio) audio.addEventListener('ended', nextSong);
+
+    // === 4. OUVERTURE DOSSIERS ===
     function openWindowFromTrigger(trigger) {
         const targetId = trigger.getAttribute('data-target');
         const targetWindow = document.getElementById(targetId);
-        
         if (targetWindow) {
             targetWindow.classList.add('active');
             bringToFront(targetWindow);
-            
-            // Sur mobile : on centre la fenêtre
             if (window.innerWidth <= 768) {
                 targetWindow.style.top = "50%";
                 targetWindow.style.left = "50%";
@@ -89,17 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // On attache les événements aux dossiers (Double clic PC / Simple clic Mobile)
     const allTriggers = document.querySelectorAll('[data-target]');
     allTriggers.forEach(trigger => {
-        // PC : Double clic
         trigger.addEventListener('dblclick', (e) => {
             if (window.innerWidth > 768) {
                 e.stopPropagation();
                 openWindowFromTrigger(trigger);
             }
         });
-        // Mobile : Simple clic
         trigger.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 e.stopPropagation();
@@ -108,9 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // === 4. BARRE DES TÂCHES ET MENU ===
-    
-    // Horloge
+    // === 5. BARRE DES TÂCHES & MENU ===
     function updateClock() {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, '0');
@@ -121,17 +181,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Menu Démarrer
     const startBtn = document.getElementById('start-btn');
     const startMenu = document.getElementById('start-menu');
-    
     if (startBtn && startMenu) {
         startBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             startMenu.classList.toggle('visible');
             startBtn.classList.toggle('active');
         });
-        // Fermer si on clique ailleurs
         document.addEventListener('click', (e) => {
             if (!startMenu.contains(e.target) && e.target !== startBtn) {
                 startMenu.classList.remove('visible');
@@ -140,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Bouton Éteindre
     const shutdownBtn = document.getElementById('shutdown-btn');
     if (shutdownBtn) {
         shutdownBtn.addEventListener('click', () => {
@@ -155,8 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === 5. VISIONNEUSE D'IMAGES (LIENS CLIQUABLES) ===
-    
+    // === 6. VISIONNEUSE ===
     const previewWindow = document.getElementById('win-preview');
     const previewImg = document.getElementById('preview-img');
     const previewTitle = document.getElementById('preview-title');
@@ -164,56 +219,38 @@ document.addEventListener('DOMContentLoaded', () => {
     function openPreview(e) {
         e.stopPropagation(); 
         const imgClicked = e.target;
-
-        // 1. Mettre l'image dans la visionneuse
         if (previewImg) previewImg.src = imgClicked.src;
-
-        // 2. Mettre le titre
         if (previewTitle) {
             const label = imgClicked.parentElement.querySelector('.file-grid__label');
             previewTitle.textContent = "Visionneuse - " + (label ? label.innerText : "Image");
         }
-
-        // 3. Afficher la fenêtre
         if (previewWindow) {
             previewWindow.classList.add('active');
             bringToFront(previewWindow);
-            
-            // Centrage forcé pour être sûr qu'elle est visible
             previewWindow.style.top = "50%";
             previewWindow.style.left = "50%";
             previewWindow.style.transform = "translate(-50%, -50%)";
         }
     }
 
-    // Attacher l'événement CLIC sur toutes les images "clickable-image"
-    // On utilise le simple clic pour simuler l'ouverture d'un fichier/lien
     const galleryImages = document.querySelectorAll('.clickable-image');
     galleryImages.forEach(img => {
         img.addEventListener('click', openPreview);
         img.style.cursor = "pointer"; 
     });
 
-    // === 6. EASTER EGGS & FOND D'ÉCRAN ===
-    
+    // === 7. EASTER EGGS ===
     document.addEventListener('mousedown', (e) => {
-        // Clic Droit
         if (e.button === 2) document.body.classList.add('right-click-active');
-        // Easter Egg (Shift + Clic)
         if (e.button === 0 && e.shiftKey) document.body.classList.add('easter-egg-active');
         
-        // Changement de fond au clic sur le bureau
         if (e.button === 0 && e.target.classList.contains('desktop')) {
             e.target.classList.toggle('click-bg-active');
         }
     });
-
     document.addEventListener('mouseup', () => {
         document.body.classList.remove('right-click-active');
         document.body.classList.remove('easter-egg-active');
     });
-
-    // Bloquer le menu contextuel par défaut
     document.addEventListener('contextmenu', (e) => e.preventDefault());
-
-}); // Fin du chargement DOM
+});
