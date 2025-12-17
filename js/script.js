@@ -254,3 +254,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.addEventListener('contextmenu', (e) => e.preventDefault());
 });
+
+// === 9. WIDGET CAMERA ===
+    const camWidget = document.querySelector('.camera-widget');
+    const camHeader = document.querySelector('.camera-widget__header');
+    
+    // 1. Rendre déplaçable
+    if (camWidget && camHeader) {
+        makeDraggable(camWidget, camHeader);
+        camWidget.addEventListener('mousedown', () => bringToFront(camWidget));
+    }
+
+    // 2. Gestion de la vidéo
+    const videoElem = document.getElementById('webcamVideo');
+    const toggleBtn = document.getElementById('camToggleBtn');
+    const recIndicator = document.querySelector('.rec-indicator');
+    const camCloseBtn = document.querySelector('.cam-close');
+    let stream = null;
+
+    async function startWebcam() {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            videoElem.srcObject = stream;
+            recIndicator.classList.add('active'); // Affiche "REC"
+            toggleBtn.style.color = "#00ff00"; // Bouton devient vert
+        } catch (err) {
+            console.error("Erreur webcam:", err);
+            alert("Impossible d'accéder à la caméra (Permission refusée ?)");
+        }
+    }
+
+    function stopWebcam() {
+        if (stream) {
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+            videoElem.srcObject = null;
+            stream = null;
+            recIndicator.classList.remove('active');
+            toggleBtn.style.color = "#ff0055"; // Retour au rouge
+        }
+    }
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            if (stream) {
+                stopWebcam();
+            } else {
+                startWebcam();
+            }
+        });
+    }
+
+    // Bouton croix pour fermer complètement le widget
+    if (camCloseBtn && camWidget) {
+        camCloseBtn.addEventListener('click', () => {
+            stopWebcam(); // On coupe la caméra d'abord
+            camWidget.style.display = 'none';
+        });
+    }
