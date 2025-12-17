@@ -16,6 +16,32 @@
             <div class="deco-element deco-blob"></div>
         </div>
 
+        <div class="music-player">
+            <div class="music-player__header">
+                <span>Lecteur MP3</span>
+                <div class="music-player__dots">:::</div>
+            </div>
+            
+            <div class="music-player__body">
+                <div class="music-cover-container">
+                    <img src="assets/cover1.jpg" id="music-cover" alt="Cover" class="music-cover">
+                </div>
+
+                <div class="music-info">
+                    <h4 id="music-title">Titre de la chanson</h4>
+                    <p id="music-artist">Artiste</p>
+                </div>
+
+                <div class="music-controls">
+                    <button id="prev-btn" class="control-btn">⏮</button>
+                    <button id="play-btn" class="control-btn">▶</button>
+                    <button id="next-btn" class="control-btn">⏭</button>
+                </div>
+
+                <audio id="audio" src=""></audio>
+            </div>
+        </div>
+
         <div class="desktop__shortcut" data-target="win-dessins" style="top: 12px; left: 234px;">
             <img src="assets/dossierjaune.png" alt="Dossier" class="desktop__icon" draggable="false">
             <p class="desktop__label">Carnet de<br>Dessins</p>
