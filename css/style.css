@@ -268,3 +268,61 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
         margin-top: 15px;
     }
 }
+
+/* ============================================================
+   STYLE SPÉCIFIQUE : FENÊTRE CONTACT (Style Rétro OS)
+   ============================================================ */
+
+/* Pour centrer le contenu dans la fenêtre */
+.contact-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Grille des boutons */
+.contact-grid {
+    display: flex;
+    gap: 20px; /* Espace entre les boutons */
+    margin-top: 10px;
+}
+
+/* Le bouton Carré Rétro */
+.social-retro-btn {
+    width: 90px;
+    height: 90px;
+    background-color: var(--win-bg);     /* Gris clair du thème */
+    border: 3px solid var(--win-border); /* Bordure noire épaisse */
+    box-shadow: var(--shadow-hard);      /* Votre ombre 8px marquée */
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: bold;
+    font-size: 14px;
+    
+    transition: transform 0.1s, box-shadow 0.1s; /* Animation rapide */
+}
+
+.social-retro-btn i {
+    font-size: 32px; /* Taille de l'icône */
+    margin-bottom: 10px;
+}
+
+/* --- ANIMATION "PRESSION DE BOUTON" --- */
+.social-retro-btn:hover {
+    background-color: #fff; /* S'éclaire un peu au survol */
+    transform: translate(4px, 4px); /* Se déplace vers l'ombre */
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4); /* L'ombre diminue */
+}
+
+.social-retro-btn:active {
+    transform: translate(8px, 8px); /* S'écrase totalement */
+    box-shadow: none; /* Plus d'ombre */
+}
