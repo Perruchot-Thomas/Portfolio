@@ -1,5 +1,5 @@
 /* ============================================================
-   PORTFOLIO OS - SCRIPT COMPLET CORRIGÉ
+   PORTFOLIO OS - SCRIPT COMPLET CORRIGÉ ET UNIFIÉ
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dragHandle.onmousedown = dragMouseDown;
 
         function dragMouseDown(e) {
-            e.preventDefault(); // Empêche la sélection de texte
+            e.preventDefault(); 
             bringToFront(element);
             pos3 = e.clientX;
             pos4 = e.clientY;
@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             closeBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 win.classList.remove('active');
-                // Si c'est la webcam ou la musique, on gère l'arrêt spécifique plus bas
             });
         }
     });
@@ -153,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
             targetWindow.classList.add('active');
             bringToFront(targetWindow);
             
-            // Centrage auto sur mobile
             if (window.innerWidth <= 768) {
                 targetWindow.style.top = "50%";
                 targetWindow.style.left = "50%";
@@ -164,14 +162,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const allTriggers = document.querySelectorAll('[data-target]');
     allTriggers.forEach(trigger => {
-        // Double clic sur ordinateur
         trigger.addEventListener('dblclick', (e) => {
             if (window.innerWidth > 768) {
                 e.stopPropagation();
                 openWindowFromTrigger(trigger);
             }
         });
-        // Simple clic sur mobile
         trigger.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 e.stopPropagation();
@@ -249,14 +245,10 @@ document.addEventListener('DOMContentLoaded', () => {
         img.addEventListener('click', openPreview);
     });
 
-   // === 7. EASTER EGGS ===
+    // === 7. EASTER EGGS ===
     document.addEventListener('mousedown', (e) => {
-        // Clic droit
         if (e.button === 2) document.body.classList.add('right-click-active');
-        // Shift + Clic
         if (e.button === 0 && e.shiftKey) document.body.classList.add('easter-egg-active');
-        
-        // J'ai supprimé ici les lignes qui changeaient le fond au clic simple
     });
 
     document.addEventListener('mouseup', () => {
@@ -265,17 +257,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-    // === 8. WIDGET CAMERA (DÉPLACÉ ICI POUR MARCHER) ===
+    // === 8. WIDGET CAMERA ===
     const camWidget = document.querySelector('.camera-widget');
     const camHeader = document.querySelector('.camera-widget__header');
     
-    // Rendre la caméra déplaçable
     if (camWidget && camHeader) {
         makeDraggable(camWidget, camHeader);
         camWidget.addEventListener('mousedown', () => bringToFront(camWidget));
     }
 
-    // Gestion de la vidéo
     const videoElem = document.getElementById('webcamVideo');
     const toggleBtn = document.getElementById('camToggleBtn');
     const recIndicator = document.querySelector('.rec-indicator');
@@ -288,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(videoElem) {
                 videoElem.srcObject = stream;
                 if(recIndicator) recIndicator.classList.add('active'); 
-                if(toggleBtn) toggleBtn.style.color = "#00ff00"; 
+                if(toggleBtn) toggleBtn.classList.add('active'); 
             }
         } catch (err) {
             console.error("Erreur webcam:", err);
@@ -303,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(videoElem) videoElem.srcObject = null;
             stream = null;
             if(recIndicator) recIndicator.classList.remove('active');
-            if(toggleBtn) toggleBtn.style.color = "#ff0055"; 
+            if(toggleBtn) toggleBtn.classList.remove('active'); 
         }
     }
 
@@ -317,7 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Bouton croix pour fermer complètement le widget
     if (camCloseBtn && camWidget) {
         camCloseBtn.addEventListener('click', () => {
             stopWebcam(); 
@@ -325,19 +314,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-}); // FIN DU DOMContentLoaded
-
-// === 10. WIDGET PONG ===
+    // === 10. WIDGET PONG ===
     const pongWidget = document.querySelector('.pong-widget');
     const pongHeader = document.querySelector('.pong-widget__header');
     
-    // 1. Rendre le widget déplaçable
     if (pongWidget && pongHeader) {
         makeDraggable(pongWidget, pongHeader);
         pongWidget.addEventListener('mousedown', () => bringToFront(pongWidget));
     }
 
-    // 2. Logique du Jeu
     const cvs = document.getElementById("pongCanvas");
     if (cvs) {
         const ctx = cvs.getContext("2d");
@@ -354,119 +339,66 @@ document.addEventListener('DOMContentLoaded', () => {
         let gameRunning = false;
         let animationId;
 
-        // Dessiner le filet
-        function drawNet() {
-            for (let i = 0; i <= cvs.height; i += 15) {
-                drawRect(net.x, net.y + i, net.width, net.height, net.color);
-            }
-        }
+        // Fonctions de dessin
+        function drawRect(x, y, w, h, color) { ctx.fillStyle = color; ctx.fillRect(x, y, w, h); }
+        function drawArc(x, y, r, color) { ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2, true); ctx.closePath(); ctx.fill(); }
+        function drawNet() { for (let i = 0; i <= cvs.height; i += 15) drawRect(net.x, net.y + i, net.width, net.height, net.color); }
 
-        // Dessiner un rectangle
-        function drawRect(x, y, w, h, color) {
-            ctx.fillStyle = color;
-            ctx.fillRect(x, y, w, h);
-        }
-
-        // Dessiner un cercle (balle)
-        function drawArc(x, y, r, color) {
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2, true);
-            ctx.closePath();
-            ctx.fill();
-        }
-
-        // Réinitialiser la balle
         function resetBall() {
             ball.x = cvs.width / 2;
             ball.y = cvs.height / 2;
             ball.speed = 4;
-            ball.velocityX = -ball.velocityX; // Change de direction
+            ball.velocityX = -ball.velocityX;
         }
 
-        // Mettre à jour le jeu
-        function update() {
-            // Déplacement de la balle
-            ball.x += ball.velocityX;
-            ball.y += ball.velocityY;
-
-            // IA simple pour l'ordi (suit la balle avec un léger délai)
-            let computerLevel = 0.1;
-            com.y += (ball.y - (com.y + com.h/2)) * computerLevel;
-
-            // Collisions haut et bas
-            if (ball.y - ball.r < 0 || ball.y + ball.r > cvs.height) {
-                ball.velocityY = -ball.velocityY;
-            }
-
-            // Détection du joueur (gauche ou droite ?)
-            let player = (ball.x < cvs.width/2) ? user : com;
-
-            // Collision raquette
-            if (collision(ball, player)) {
-                // Point d'impact normalisé (-1 à 1)
-                let collidePoint = (ball.y - (player.y + player.h/2));
-                collidePoint = collidePoint / (player.h/2);
-
-                // Calcul angle de rebond (45 degrés max)
-                let angleRad = (Math.PI/4) * collidePoint;
-
-                // Direction
-                let direction = (ball.x < cvs.width/2) ? 1 : -1;
-
-                ball.velocityX = direction * ball.speed * Math.cos(angleRad);
-                ball.velocityY = ball.speed * Math.sin(angleRad);
-
-                // Accélération à chaque touche
-                ball.speed += 0.2;
-            }
-
-            // Gestion du Score
-            if (ball.x - ball.r < 0) {
-                com.score++;
-                scoreDiv.innerText = `${user.score} : ${com.score}`;
-                resetBall();
-            } else if (ball.x + ball.r > cvs.width) {
-                user.score++;
-                scoreDiv.innerText = `${user.score} : ${com.score}`;
-                resetBall();
-            }
-        }
-
-        // Détection collision simple
         function collision(b, p) {
-            p.top = p.y;
-            p.bottom = p.y + p.h;
-            p.left = p.x;
-            p.right = p.x + p.w;
-
-            b.top = b.y - b.r;
-            b.bottom = b.y + b.r;
-            b.left = b.x - b.r;
-            b.right = b.x + b.r;
-
+            p.top = p.y; p.bottom = p.y + p.h; p.left = p.x; p.right = p.x + p.w;
+            b.top = b.y - b.r; b.bottom = b.y + b.r; b.left = b.x - b.r; b.right = b.x + b.r;
             return p.left < b.right && p.top < b.bottom && p.right > b.left && p.bottom > b.top;
         }
 
-        // Boucle de rendu
-        function render() {
-            // Effacer le canvas (fond noir)
-            drawRect(0, 0, cvs.width, cvs.height, "#000");
-            drawNet();
-            drawRect(user.x, user.y, user.w, user.h, user.color); // Joueur
-            drawRect(com.x, com.y, com.w, com.h, com.color);     // Ordi
-            drawArc(ball.x, ball.y, ball.r, ball.color);         // Balle
-        }
+        function update() {
+            ball.x += ball.velocityX;
+            ball.y += ball.velocityY;
+            
+            // IA
+            let computerLevel = 0.1;
+            com.y += (ball.y - (com.y + com.h/2)) * computerLevel;
 
-        function gameLoop() {
-            update();
-            render();
-            if(gameRunning) {
-                animationId = requestAnimationFrame(gameLoop);
+            if (ball.y - ball.r < 0 || ball.y + ball.r > cvs.height) ball.velocityY = -ball.velocityY;
+
+            let player = (ball.x < cvs.width/2) ? user : com;
+
+            if (collision(ball, player)) {
+                let collidePoint = (ball.y - (player.y + player.h/2));
+                collidePoint = collidePoint / (player.h/2);
+                let angleRad = (Math.PI/4) * collidePoint;
+                let direction = (ball.x < cvs.width/2) ? 1 : -1;
+                ball.velocityX = direction * ball.speed * Math.cos(angleRad);
+                ball.velocityY = ball.speed * Math.sin(angleRad);
+                ball.speed += 0.2;
+            }
+
+            if (ball.x - ball.r < 0) {
+                com.score++; scoreDiv.innerText = `${user.score} : ${com.score}`; resetBall();
+            } else if (ball.x + ball.r > cvs.width) {
+                user.score++; scoreDiv.innerText = `${user.score} : ${com.score}`; resetBall();
             }
         }
 
-        // Contrôle Souris
+        function render() {
+            drawRect(0, 0, cvs.width, cvs.height, "#000");
+            drawNet();
+            drawRect(user.x, user.y, user.w, user.h, user.color);
+            drawRect(com.x, com.y, com.w, com.h, com.color);
+            drawArc(ball.x, ball.y, ball.r, ball.color);
+        }
+
+        function gameLoop() {
+            update(); render();
+            if(gameRunning) animationId = requestAnimationFrame(gameLoop);
+        }
+
         cvs.addEventListener("mousemove", (evt) => {
             if(gameRunning) {
                 let rect = cvs.getBoundingClientRect();
@@ -474,29 +406,83 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Bouton Play/Pause
         startBtn.addEventListener("click", () => {
             if (!gameRunning) {
-                gameRunning = true;
-                gameLoop();
-                startBtn.innerText = "⏸";
+                gameRunning = true; gameLoop(); startBtn.innerText = "⏸";
             } else {
-                gameRunning = false;
-                cancelAnimationFrame(animationId);
-                startBtn.innerText = "▶";
+                gameRunning = false; cancelAnimationFrame(animationId); startBtn.innerText = "▶";
             }
         });
 
-        // Bouton Fermer
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
-                gameRunning = false;
-                cancelAnimationFrame(animationId);
-                startBtn.innerText = "▶";
+                gameRunning = false; cancelAnimationFrame(animationId); startBtn.innerText = "▶";
                 pongWidget.style.display = 'none';
             });
         }
-        
-        // Affichage initial
         render();
     }
+
+    // === 11. GESTION DES BOUTONS DE LA BARRE DES TÂCHES ===
+    
+    const btnMusic = document.getElementById('btn-toggle-music');
+    const btnPong = document.getElementById('btn-toggle-pong');
+    const btnCam = document.getElementById('btn-toggle-cam');
+
+    function toggleWidget(btn, widget, onOpen = null, onClose = null) {
+        if (!widget || !btn) return;
+        const isVisible = window.getComputedStyle(widget).display !== 'none';
+
+        if (isVisible) {
+            widget.style.display = 'none';
+            btn.classList.remove('active');
+            if (onClose) onClose();
+        } else {
+            widget.style.display = 'flex';
+            btn.classList.add('active');
+            bringToFront(widget);
+            if (onOpen) onOpen();
+        }
+    }
+
+    // BOUTON MUSIQUE
+    if (btnMusic && musicPlayer) {
+        btnMusic.addEventListener('click', () => toggleWidget(btnMusic, musicPlayer));
+    }
+
+    // BOUTON PONG
+    if (btnPong && pongWidget) {
+        btnPong.addEventListener('click', () => {
+            toggleWidget(btnPong, pongWidget, null, () => {
+                // Optionnel : Mettre pause si besoin
+            });
+        });
+        
+        // Synchro fermeture via la croix
+        const pongCloseX = pongWidget.querySelector('.pong-close');
+        if (pongCloseX) {
+            pongCloseX.addEventListener('click', () => {
+                btnPong.classList.remove('active');
+            });
+        }
+    }
+
+    // BOUTON CAMÉRA
+    if (btnCam && camWidget) {
+        btnCam.addEventListener('click', () => {
+            toggleWidget(btnCam, camWidget, null, () => {
+                stopWebcam(); // Important : éteindre la caméra
+            });
+        });
+
+        // Synchro fermeture via la croix
+        const camCloseX = camWidget.querySelector('.cam-close'); 
+        if (camCloseX) {
+            camCloseX.addEventListener('click', () => {
+                btnCam.classList.remove('active');
+                stopWebcam(); // S'assurer qu'elle s'éteint aussi par la croix
+            });
+        }
+    }
+
+}); // FIN DU DOMContentLoaded

@@ -3,18 +3,14 @@
    ============================================================ */
 :root {
     --bg-desktop: #2a2a2a;      /* Fond gris foncé */
-    
     --win-bg: #e0e0e0;          /* Gris clair pour le contenu */
     --win-header-start: #000000;/* Dégradé Noir */
     --win-header-end: #2e2e2e;  /* vers Gris */
     --win-border: #1a1a1a;      /* Bordure foncée */
-    
     --taskbar-bg: #3f3f3f;      /* Barre sombre */
     --taskbar-btn: #525252;     /* Boutons gris */
-
     --text-primary: #1a1a1a;    /* Texte noir (dans les fenêtres) */
     --text-light: #ffffff;      /* Texte blanc (sur le bureau/headers) */
-    
     --shadow-hard: 8px 8px 0px rgba(0, 0, 0, 0.4); /* Ombre marquée */
 }
 
@@ -24,7 +20,7 @@
 html, body, * { 
     cursor: url('../assets/curseur copie.png'), auto !important; 
 }
-a, button, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__item, .taskbar__start-btn, .clickable-image, .window__header, .control-btn, .cam-btn, .cam-close {
+a, button, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__item, .taskbar__start-btn, .clickable-image, .window__header, .control-btn, .cam-btn, .cam-close, .pong-btn, .pong-close {
     cursor: url('../assets/curseur point.png'), pointer !important;
 }
 input, textarea, span, p, h1, h2, h3, h4, h5, h6 { 
@@ -55,7 +51,10 @@ body {
 }
 .desktop.click-bg-active { background-image: url('../assets/fondbis.jpeg') !important; }
 
-.desktop__layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 20%, rgba(0,0,0,0.8) 100%);}
+.desktop__layer { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; 
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 20%, rgba(0,0,0,0.8) 100%);
+}
 .deco-blob {
     bottom: 100px; right: 100px; width: 300px; height: 300px;
     background: linear-gradient(45deg, #ff0055, #ffcc00); border-radius: 50%;
@@ -250,151 +249,136 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
     background-color: var(--win-bg); border: 3px solid var(--win-border);
     box-shadow: var(--shadow-hard); z-index: 40; display: flex; flex-direction: column;
 }
-
 .camera-widget__header {
-    background: linear-gradient(90deg, #000, #333); padding: 8px 10px; /* Un peu plus de hauteur */
+    background: linear-gradient(90deg, #000, #333); padding: 8px 10px;
     border-bottom: 3px solid var(--win-border); font-weight: bold; font-size: 12px;
     display: flex; justify-content: space-between; align-items: center;
     color: #fff; cursor: grab; user-select: none;
 }
-
 .camera-controls { display: flex; align-items: center; }
-
-/* LE NOUVEAU BOUTON D'ACTIVATION */
 .cam-btn { 
-    background-color: #1a1a1a; /* Fond sombre */
-    border: 1px solid #ff0055; /* Bordure rouge néon */
-    color: #ff0055;
-    padding: 4px 12px;         /* Espace autour du texte (Zone de clic agrandie) */
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
+    background-color: #1a1a1a; border: 1px solid #ff0055; color: #ff0055;
+    padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: bold;
+    letter-spacing: 1px; transition: all 0.2s ease; text-transform: uppercase;
 }
-
-/* Effet au survol : devient plein */
-.cam-btn:hover { 
-    background-color: #ff0055; 
-    color: #fff;
-    box-shadow: 0 0 8px #ff0055; /* Petit effet lumineux */
-}
-
-/* Quand activé (géré par le JS qui change la couleur inline, mais on prévoit le coup) */
-.cam-btn.active {
-    border-color: #00ff00;
-    color: #00ff00;
-}
-
+.cam-btn:hover { background-color: #ff0055; color: #fff; box-shadow: 0 0 8px #ff0055; }
+.cam-btn.active { border-color: #00ff00; color: #00ff00; }
 .camera-widget__body { padding: 10px; background-color: #000; }
-
 .video-container {
     position: relative; width: 100%; height: 180px; background: #111;
-    overflow: hidden; border: 2px solid #333;
-    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; border: 2px solid #333; display: flex; align-items: center; justify-content: center;
 }
-
-/* Message par défaut quand la caméra est éteinte */
 .video-container::after {
-    content: "NO SIGNAL";
-    color: #333;
-    font-family: monospace;
-    font-size: 20px;
-    position: absolute;
-    z-index: 0;
+    content: "NO SIGNAL"; color: #333; font-family: monospace; font-size: 20px;
+    position: absolute; z-index: 0;
 }
-
 #webcamVideo {
-    width: 100%; height: 100%; object-fit: cover;
-    transform: scaleX(-1); opacity: 0.8;
-    position: relative; z-index: 1; /* Passe au-dessus du texte NO SIGNAL */
+    width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1);
+    opacity: 0.8; position: relative; z-index: 1;
 }
-
 .scanlines {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: repeating-linear-gradient(transparent 0px, transparent 2px, rgba(0, 0, 0, 0.3) 3px);
     pointer-events: none; z-index: 2;
 }
-
 .rec-indicator {
     position: absolute; top: 10px; right: 10px; color: #ff0000;
-    font-weight: bold; font-family: monospace; font-size: 12px;
-    z-index: 3; animation: blink 1s infinite; display: none;
-    background: rgba(0,0,0,0.5); padding: 2px 5px; border-radius: 2px;
+    font-weight: bold; font-family: monospace; font-size: 12px; z-index: 3;
+    animation: blink 1s infinite; display: none; background: rgba(0,0,0,0.5);
+    padding: 2px 5px; border-radius: 2px;
 }
 .rec-indicator.active { display: block; }
 @keyframes blink { 50% { opacity: 0; } }
-
-/* RESPONSIVE */
-@media screen and (max-width: 768px) {
-    .camera-widget { display: none !important; }
-}
 
 /* ============================================================
    WIDGET PONG
    ============================================================ */
 .pong-widget {
-    position: absolute; 
-    top: 100px; 
-    left: 400px; /* Position de départ */
-    width: 290px;
-    background-color: var(--win-bg); 
-    border: 3px solid var(--win-border); 
-    box-shadow: var(--shadow-hard);
-    z-index: 40;
-    display: flex; 
-    flex-direction: column;
+    position: absolute; top: 100px; left: 400px; width: 290px;
+    background-color: var(--win-bg); border: 3px solid var(--win-border); 
+    box-shadow: var(--shadow-hard); z-index: 40; display: flex; flex-direction: column;
 }
-
 .pong-widget__header {
-    background: linear-gradient(90deg, #000, #333); 
-    padding: 5px 10px;
-    border-bottom: 3px solid var(--win-border); 
-    font-weight: bold; 
-    font-size: 12px; 
-    display: flex; 
-    justify-content: space-between;
-    align-items: center; 
-    color: #fff;
-    cursor: grab;
-    user-select: none;
+    background: linear-gradient(90deg, #000, #333); padding: 5px 10px;
+    border-bottom: 3px solid var(--win-border); font-weight: bold; font-size: 12px; 
+    display: flex; justify-content: space-between; align-items: center; 
+    color: #fff; cursor: grab; user-select: none;
 }
-
 .pong-controls { display: flex; gap: 10px; align-items: center; }
-
 .pong-btn {
     background: none; border: 1px solid #fff; color: #fff; 
     cursor: pointer; font-size: 10px; width: 20px; height: 20px;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; border-radius: 50%;
 }
 .pong-btn:hover { background: #fff; color: #000; }
-
-.pong-close {
-    background: none; border: none; color: white; cursor: pointer; font-weight: bold;
-}
+.pong-close { background: none; border: none; color: white; cursor: pointer; font-weight: bold; }
 .pong-close:hover { color: #ff4d4d; }
-
 .pong-widget__body {
-    padding: 10px; 
-    background-color: #222;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
+    padding: 10px; background-color: #222; display: flex; flex-direction: column; align-items: center;
 }
-
-#pongCanvas {
-    background-color: #000;
-    border: 2px solid #555;
-    cursor: none; /* Cache la souris sur le jeu pour l'immersion */
-}
-
+#pongCanvas { background-color: #000; border: 2px solid #555; cursor: none; }
 #pongScore {
-    margin-top: 5px;
-    color: #fff;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 16px;
-    letter-spacing: 2px;
-} 
+    margin-top: 5px; color: #fff; font-family: 'Courier New', monospace;
+    font-weight: bold; font-size: 16px; letter-spacing: 2px;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 768px) {
+    .camera-widget, .pong-widget, .taskbar, .start-menu, .music-player { display: none !important; }
+}
+
+/* ============================================================
+   BARRE DES TÂCHES (MISE À JOUR)
+   ============================================================ */
+.taskbar {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 42px;
+    background-color: var(--taskbar-bg); border-top: 3px solid var(--win-border);
+    display: flex; align-items: center; padding: 4px; z-index: 99999;
+}
+
+.taskbar__start-btn {
+    height: 100%; padding: 0 15px; font-weight: bold; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--taskbar-btn); color: var(--text-light);
+    border: 2px solid var(--win-border); margin-right: 10px;
+}
+.taskbar__start-btn:active, .taskbar__start-btn.active { 
+    background: var(--win-border); color: white; box-shadow: inset 2px 2px 0px #000;
+}
+
+/* LE CONTENEUR DES BOUTONS */
+.taskbar__items {
+    flex: 1; /* Prend toute la place disponible */
+    display: flex;
+    gap: 5px; /* Espace entre les boutons */
+    height: 100%;
+}
+
+/* STYLE DES BOUTONS WIDGETS */
+.taskbar__item {
+    height: 100%;
+    width: 45px; /* Largeur fixe pour faire propre */
+    background-color: var(--taskbar-btn);
+    border: 2px solid var(--win-border);
+    color: var(--text-light);
+    font-size: 18px; /* Taille de l'icône */
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.1s;
+}
+
+.taskbar__item:hover {
+    background-color: #666; /* Un peu plus clair au survol */
+}
+
+/* QUAND LE WIDGET EST OUVERT (bouton enfoncé) */
+.taskbar__item.active {
+    background-color: #2a2a2a; /* Plus sombre */
+    box-shadow: inset 2px 2px 0px #000; /* Effet creusé */
+    color: #ffffff; /* Petite touche de couleur néon (optionnel) */
+    border-color: #555;
+}
+
+.taskbar__tray {
+    margin-left: auto; background: var(--win-header-end); border: 2px solid var(--win-border); color: var(--text-light);
+    padding: 0 15px; height: 100%; display: flex; align-items: center; justify-content: center; min-width: 70px;
+}
