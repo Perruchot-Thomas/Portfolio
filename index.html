@@ -6,6 +6,7 @@
     <title>Mon Portfolio OS</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <link rel="icon" type="image/png" href="assets/favicon-3/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon-3/favicon.svg" />
     <link rel="shortcut icon" href="assets/favicon-3/favicon.ico" />
@@ -19,7 +20,6 @@
     <main class="desktop">
 
         <div class="desktop__layer" style="pointer-events: none;">
-            <img src="" alt="" class="deco-element deco-smiley"> 
             <div class="deco-element deco-blob"></div>
         </div>
 
@@ -47,27 +47,41 @@
 
                 <audio id="audio" src=""></audio>
             </div>
- 
         </div>
+
+        <div class="pong-widget">
+            <div class="pong-widget__header">
+             <span>Pong.exe</span>
+              <div class="pong-controls">
+               <button id="pongStartBtn" class="pong-btn" title="Jouer/Pause">▶</button>
+               <button class="pong-close" title="Fermer">✖</button>
+            </div>
+         </div>
+    
+    <div class="pong-widget__body">
+        <canvas id="pongCanvas" width="260" height="180"></canvas>
+        <div id="pongScore">0 : 0</div>
+    </div>
 </div>
 
-<div class="camera-widget">
-    <div class="camera-widget__header">
-        <span>Webcam.exe</span>
-        <div class="camera-controls">
-            <button id="camToggleBtn" class="cam-btn" title="On/Off">⏺</button>
-            <button class="cam-close" title="Fermer">✖</button>
+        <div class="camera-widget">
+            <div class="camera-widget__header">
+                <span>Webcam.exe</span>
+                <div class="camera-controls">
+                   <button id="camToggleBtn" class="cam-btn" title="Activer/Désactiver">
+                ⏺ REC
+            </button>
+                </div>
+            </div>
+            
+            <div class="camera-widget__body">
+                <div class="video-container">
+                    <video id="webcamVideo" autoplay playsinline></video>
+                    <div class="scanlines"></div>
+                    <div class="rec-indicator">REC</div>
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <div class="camera-widget__body">
-        <div class="video-container">
-            <video id="webcamVideo" autoplay playsinline></video>
-            <div class="scanlines"></div>
-            <div class="rec-indicator">REC</div>
-        </div>
-    </div>
-</div>
 
         <div class="desktop__shortcut" data-target="win-dessins" style="top: 12px; left: 234px;">
             <img src="assets/dossierjaune.png" alt="Dossier" class="desktop__icon" draggable="false">
@@ -102,74 +116,44 @@
             <div class="window__body">
                 <p>Mes recherches graphiques</p>
                 <hr>
-                
                 <div class="file-grid">
-                    
                     <div class="file-grid__item" data-target="win-pastels">
                         <img src="assets/dossierjaune.png" alt="Dossier" class="file-grid__icon" draggable="false">
                         <p class="file-grid__label">Dossier_Pastels</p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/Sidus.jpg" alt="Croquis 1" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/minicahier1.jpg" alt="Croquis 2" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/minicahier2.jpg" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
                     </div>
-
                     <div class="file-grid__item">
-                        <img src="assets/minicahier3.jpg" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
+                        <img src="assets/minicahier3.jpg" alt="Croquis 4" class="file-grid__icon clickable-image">
                     </div>
-
                     <div class="file-grid__item">
-                        <img src="assets/minicahier4.jpg" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
+                        <img src="assets/minicahier4.jpg" alt="Croquis 5" class="file-grid__icon clickable-image">
                     </div>
-
                     <div class="file-grid__item">
-                        <img src="assets/behh.png" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
+                        <img src="assets/behh.png" alt="Croquis 6" class="file-grid__icon clickable-image">
                     </div>
-
                      <div class="file-grid__item">
-                        <img src="assets/SWAG.png" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
+                        <img src="assets/SWAG.png" alt="Croquis 7" class="file-grid__icon clickable-image">
                     </div>
-
                     <div class="file-grid__item">
-                        <img src="assets/Plaisir.heic" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
+                        <img src="assets/Plaisir.jpg" alt="Croquis 8" class="file-grid__icon clickable-image">
                     </div>
-
                     <div class="file-grid__item">
-                        <img src="assets/Face Hard Work.heic" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
+                        <img src="assets/Face Hard Work.jpg" alt="Croquis 9" class="file-grid__icon clickable-image">
                     </div>
-
                     <div class="file-grid__item">
-                        <img src="assets/Pretty girl.heic" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
+                        <img src="assets/Pretty girl.jpg" alt="Croquis 10" class="file-grid__icon clickable-image">
                     </div>
-
                     <div class="file-grid__item">
-                        <img src="assets/petit corp grandes mains.heic" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
+                        <img src="assets/petit corp grandes mains.jpg" alt="Croquis 11" class="file-grid__icon clickable-image">
                     </div>
-
-                    <div class="file-grid__item">
-                        <img src="assets/Plaisir.heic" alt="Croquis 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -182,85 +166,66 @@
             <div class="window__body">
                 <p>Collection Pastels (Cliquez pour agrandir)</p>
                 <hr>
-
                 <div class="file-grid">
-                    
                     <div class="file-grid__item">
                         <img src="assets/pastel1.jpg" alt="Pastel 1" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/pastel2.jpg" alt="Pastel 2" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/pastel3.jpg" alt="Pastel 3" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label"></p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/pastel4.jpg" alt="Pastel 4" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label">g</p>
                     </div>
-
                 </div>
             </div>
         </div>
         
-
         <div id="win-digital" class="window">
             <div class="window__header">
                 <span class="window__title">Oeuvres Digital</span>
                 <button class="window__close">X</button>
             </div>
-            
             <div class="window__body">
                 <p>Cliquez sur une image pour l'agrandir.</p>
                 <hr>
-
                 <div class="file-grid">
-                    
                     <div class="file-grid__item">
                         <img src="assets/Nœud Humain.JPG" alt="Nœud Humain" class="file-grid__icon clickable-image">
                         <p class="file-grid__label">Noeud_Humain</p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/Extase.JPG" alt="Extase" class="file-grid__icon clickable-image">
-                        <p class="file-grid__label">Extasejpg</p>
+                        <p class="file-grid__label">Extase</p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/Double Vision.JPG" alt="Double Vision" class="file-grid__icon clickable-image">
                         <p class="file-grid__label">Double_Vision</p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/Dose Stellaire.JPG" alt="Dose Stellaire" class="file-grid__icon clickable-image">
                         <p class="file-grid__label">Dose_Stellaire</p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/Cœur d'Épines.JPG" alt="Coeur Epines" class="file-grid__icon clickable-image">
                         <p class="file-grid__label">Coeur_Epines</p>
                     </div>
-
                     <div class="file-grid__item">
                         <img src="assets/Vibration Urbaine.JPG" alt="Vibration" class="file-grid__icon clickable-image">
                         <p class="file-grid__label">Vibration</p>
                     </div>
-
-                </div> </div> </div> 
+                </div> 
+            </div> 
+        </div> 
                 
-            <div id="win-about" class="window" style="width: 650px;">
+        <div id="win-about" class="window" style="width: 650px;">
             <div class="window__header">
                 <span class="window__title">À Propos de Sidus</span>
                 <button class="window__close">X</button>
             </div>
             <div class="window__body">
-                
                 <div class="about-container">
                     <div class="about-image-wrapper">
                         <img src="assets/me.jpg" alt="Sidus" class="about-photo">
@@ -268,75 +233,58 @@
                             <span class="status-dot"></span>
                         </div>
                     </div>
-
                     <div class="about-content">
                         <h2>Je suis Sidus.</h2>
                         <span class="about-subtitle">18 ans | Artiste Visuel</span>
                         <br>
-                        
                         <div class="about-text-scroll">
                             <br>
-                            <p>
-                                Je crée depuis bien plus longtemps que mes 18 ans ; je vois ça comme une deuxième respiration, une nécessité vitale. Mon travail est le résultat direct, presque brut, de tout ce qui se bouscule dans ma tête.
-                            </p>
+                            <p>Je crée depuis bien plus longtemps que mes 18 ans ; je vois ça comme une deuxième respiration, une nécessité vitale. Mon travail est le résultat direct, presque brut, de tout ce qui se bouscule dans ma tête.</p>
                             <br>
-                            <p>
-                                Là où d'autres classent, je ne cherche pas à trier ce qui s’y trouve, je cherche au contraire à tout mélanger, à faire cohabiter mes obsessions.
-                            </p>
+                            <p>Là où d'autres classent, je ne cherche pas à trier ce qui s’y trouve, je cherche au contraire à tout mélanger, à faire cohabiter mes obsessions.</p>
                             <br>
                             <p><strong>Une zone de fusion.</strong></p>
                             <br>
-                            <p>
-                                Je refuse catégoriquement de cloisonner les techniques. Chez moi, la froideur du dessin digital côtoie le grain du pastel, la peinture se mêle au trait nerveux. Je superpose les designs et les idées pour obtenir une densité visuelle qui me ressemble.
-                            </p>
+                            <p>Je refuse catégoriquement de cloisonner les techniques. Chez moi, la froideur du dessin digital côtoie le grain du pastel, la peinture se mêle au trait nerveux. Je superpose les designs et les idées pour obtenir une densité visuelle qui me ressemble.</p>
                             <br>
-                            <p>
-                                C'est un processus presque organique : je prends le chaos de mes pensées, mes envies de dénoncer, mes contradictions, et je leur donne corps pour les expulser du réel.
-                            </p>
+                            <p>C'est un processus presque organique : je prends le chaos de mes pensées, mes envies de dénoncer, mes contradictions, et je leur donne corps pour les expulser du réel.</p>
                             <p style="font-style: italic; margin-top: 10px; border-left: 3px solid var(--text-primary); padding-left: 10px;">
                                 "Je me moque des codes académiques... Ce qui m'importe, c'est la texture palpable de l'œuvre, son impact immédiat."
                             </p>
                         </div>
                     </div>
                 </div>
-
             </div>
-        </div>
         </div>
 
         <div id="win-contact" class="window">
-    <div class="window__header">
-        <span class="window__title">Contact</span>
-        <button class="window__close">X</button>
-    </div>
-    
-    <div class="window__body contact-body">
-        <h2>ME CONTACTER</h2>
-        <p style="margin-bottom: 20px;">Choisissez un canal :</p>
-
-        <div class="contact-grid">
-            <a href="https://www.tiktok.com/@sidus.sidus?_r=1&_t=ZN-928bU8gwupC" target="_blank" class="social-retro-btn">
-                <i class="fa-brands fa-tiktok"></i>
-                <span>TikTok</span>
-            </a>
-
-            <a href="https://www.instagram.com/ssidusss?igsh=anh1dXh4NXcwazF4&utm_source=qr
-               " target="_blank" class="social-retro-btn">
-                <i class="fa-brands fa-instagram"></i>
-                <span>Insta</span>
-            </a>
-
-            <a href="mailto:sidus.sidus@yahoo.com" class="social-retro-btn">
-                <i class="fa-solid fa-envelope"></i>
-                <span>Email</span>
-            </a>
+            <div class="window__header">
+                <span class="window__title">Contact</span>
+                <button class="window__close">X</button>
+            </div>
+            <div class="window__body contact-body">
+                <h2>ME CONTACTER</h2>
+                <p style="margin-bottom: 20px;">Choisissez un canal :</p>
+                <div class="contact-grid">
+                    <a href="https://www.tiktok.com/@sidus.sidus?_r=1&_t=ZN-928bU8gwupC" target="_blank" class="social-retro-btn">
+                        <i class="fa-brands fa-tiktok"></i>
+                        <span>TikTok</span>
+                    </a>
+                    <a href="https://www.instagram.com/ssidusss?igsh=anh1dXh4NXcwazF4&utm_source=qr" target="_blank" class="social-retro-btn">
+                        <i class="fa-brands fa-instagram"></i>
+                        <span>Insta</span>
+                    </a>
+                    <a href="mailto:sidus.sidus@yahoo.com" class="social-retro-btn">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
         <div id="win-preview" class="window">
             <div class="window__header">
-                <span class="window__title" id="preview-title">visionneuse</span>
+                <span class="window__title" id="preview-title">Visionneuse</span>
                 <button class="window__close">X</button>
             </div>
             <div class="window__body preview-body">
@@ -344,32 +292,29 @@
             </div>
         </div>
 
-        
-        <div id="start-menu" class="start-menu">
-            <div class="start-menu__sidebar">
-                <span class="start-menu__name">Portfolio</span>
+    </main> <div id="start-menu" class="start-menu">
+        <div class="start-menu__sidebar">
+            <span class="start-menu__name">Portfolio</span>
+        </div>
+        <div class="start-menu__content">
+            <div class="start-menu__item" onclick="location.reload()">
+                Redémarrer
             </div>
-            <div class="start-menu__content">
-                <div class="start-menu__item" onclick="location.reload()">
-                    Redémarrer
-                </div>
-                <div class="start-menu__item" id="shutdown-btn">
-                    Éteindre
-                </div>
+            <div class="start-menu__item" id="shutdown-btn">
+                Éteindre
             </div>
         </div>
+    </div>
 
-        <div class="taskbar">
-            <button class="taskbar__start-btn" id="start-btn">
-                <img src="" alt="" style="width: 20px; margin-right: 5px;">
-                Démarrer
-            </button>
-            <div class="taskbar__items"></div>
-            <div class="taskbar__tray">
-                <span id="clock">12:00</span>
-            </div>
+    <div class="taskbar">
+        <button class="taskbar__start-btn" id="start-btn">
+            Démarrer
+        </button>
+        <div class="taskbar__items"></div>
+        <div class="taskbar__tray">
+            <span id="clock">12:00</span>
         </div>
+    </div>
 
-    </main>
 </body>
 </html>

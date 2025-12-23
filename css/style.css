@@ -1,5 +1,5 @@
 /* ============================================================
-   PALETTE "SOMBRE / DARK OS" (Ta DA originale)
+   PALETTE "SOMBRE / DARK OS"
    ============================================================ */
 :root {
     --bg-desktop: #2a2a2a;      /* Fond gris foncé */
@@ -19,12 +19,12 @@
 }
 
 /* ============================================================
-   CURSEURS (Tes images persos)
+   CURSEURS
    ============================================================ */
 html, body, * { 
     cursor: url('../assets/curseur copie.png'), auto !important; 
 }
-a, button, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__item, .taskbar__start-btn, .clickable-image, .window__header, .control-btn {
+a, button, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__item, .taskbar__start-btn, .clickable-image, .window__header, .control-btn, .cam-btn, .cam-close {
     cursor: url('../assets/curseur point.png'), pointer !important;
 }
 input, textarea, span, p, h1, h2, h3, h4, h5, h6 { 
@@ -42,7 +42,7 @@ input, textarea, span, p, h1, h2, h3, h4, h5, h6 {
 body {
     overflow: hidden; height: 100vh; width: 100vw;
     background-color: var(--bg-desktop);
-    color: var(--text-light); /* Texte blanc par défaut sur le body */
+    color: var(--text-light);
 }
 
 /* ============================================================
@@ -50,13 +50,12 @@ body {
    ============================================================ */
 .desktop {
     width: 100%; height: 100%; position: relative;
-    /* TON IMAGE DE FOND */
     background-image: url('../assets/fond.jpeg'); 
     background-size: cover; background-position: center; background-repeat: no-repeat;
 }
 .desktop.click-bg-active { background-image: url('../assets/fondbis.jpeg') !important; }
 
-.desktop__layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.desktop__layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 20%, rgba(0,0,0,0.8) 100%);}
 .deco-blob {
     bottom: 100px; right: 100px; width: 300px; height: 300px;
     background: linear-gradient(45deg, #ff0055, #ffcc00); border-radius: 50%;
@@ -65,7 +64,7 @@ body {
 body.easter-egg-active, body.easter-egg-active * { cursor: url('../assets/fuck.png'), auto !important; }
 
 /* ============================================================
-   WIDGET MUSIQUE (STYLE SOMBRE ADAPTÉ)
+   WIDGET MUSIQUE
    ============================================================ */
 .music-player {
     position: absolute; top: 20px; right: 20px; width: 250px;
@@ -84,7 +83,7 @@ body.easter-egg-active, body.easter-egg-active * { cursor: url('../assets/fuck.p
 
 .music-player__body {
     padding: 15px; display: flex; flex-direction: column; align-items: center; text-align: center;
-    background-color: #333; /* Fond intérieur sombre */
+    background-color: #333;
     color: #fff;
 }
 
@@ -209,133 +208,137 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
 .start-menu__item { padding: 10px; color: var(--text-primary); font-weight: bold; }
 .start-menu__item:hover { background-color: var(--win-header-start); color: white; }
 
-/* RESPONSIVE */
-@media screen and (max-width: 768px) {
-    .taskbar, .start-menu, .music-player { display: none !important; }
-    .desktop { display: grid; grid-template-columns: repeat(4, 1fr); padding: 50px 10px; }
-    .desktop__shortcut { position: relative !important; top: auto !important; left: auto !important; width: 100%; margin: 0; }
-    .window { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; transform: none !important; }
-    #win-preview { width: 100% !important; height: 100% !important; }
-}
-
 /* ============================================================
    STYLE SPÉCIFIQUE : FENÊTRE À PROPOS
    ============================================================ */
-
-.about-container {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-}
-
-/* Style de l'image */
-.about-image-wrapper {
-    flex-shrink: 0; /* L'image ne rétrécit pas */
-}
-
+.about-container { display: flex; gap: 20px; align-items: flex-start; }
+.about-image-wrapper { flex-shrink: 0; }
 .about-photo {
-    width: 150px;
-    height: 150px;
-    object-fit: cover; /* Recadre l'image proprement si elle n'est pas carrée */
-    border: 3px solid var(--text-primary); /* Bordure noire style cadre */
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.2); /* Petite ombre rétro */
+    width: 150px; height: 150px; object-fit: cover;
+    border: 3px solid var(--text-primary); box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
 }
-
-/* Style du texte */
-.about-content {
-    color: var(--text-primary);
-    font-size: 14px;
-    line-height: 1.5;
-}
-
+.about-content { color: var(--text-primary); font-size: 14px; line-height: 1.5; }
 .about-content h2 {
-    font-size: 22px;
-    margin-bottom: 5px;
-    border-bottom: 2px solid var(--text-primary);
-    padding-bottom: 5px;
-    display: inline-block;
-}
-
-/* RESPONSIVE : Sur mobile, on met la photo au dessus du texte */
-@media screen and (max-width: 768px) {
-    .about-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-    
-    .about-content h2 {
-        margin-top: 15px;
-    }
+    font-size: 22px; margin-bottom: 5px; border-bottom: 2px solid var(--text-primary);
+    padding-bottom: 5px; display: inline-block;
 }
 
 /* ============================================================
-   STYLE SPÉCIFIQUE : FENÊTRE CONTACT (Style Rétro OS)
+   STYLE SPÉCIFIQUE : FENÊTRE CONTACT
    ============================================================ */
-
-/* Pour centrer le contenu dans la fenêtre */
-.contact-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-/* Grille des boutons */
-.contact-grid {
-    display: flex;
-    gap: 20px; /* Espace entre les boutons */
-    margin-top: 10px;
-}
-
-/* Le bouton Carré Rétro */
+.contact-body { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.contact-grid { display: flex; gap: 20px; margin-top: 10px; }
 .social-retro-btn {
-    width: 90px;
-    height: 90px;
-    background-color: var(--win-bg);     /* Gris clair du thème */
-    border: 3px solid var(--win-border); /* Bordure noire épaisse */
-    box-shadow: var(--shadow-hard);      /* Votre ombre 8px marquée */
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
-    text-decoration: none;
-    color: var(--text-primary);
-    font-weight: bold;
-    font-size: 14px;
-    
-    transition: transform 0.1s, box-shadow 0.1s; /* Animation rapide */
+    width: 90px; height: 90px; background-color: var(--win-bg);
+    border: 3px solid var(--win-border); box-shadow: var(--shadow-hard);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-decoration: none; color: var(--text-primary); font-weight: bold; font-size: 14px;
+    transition: transform 0.1s, box-shadow 0.1s;
 }
-
-.social-retro-btn i {
-    font-size: 32px; /* Taille de l'icône */
-    margin-bottom: 10px;
-}
-
-/* --- ANIMATION "PRESSION DE BOUTON" --- */
+.social-retro-btn i { font-size: 32px; margin-bottom: 10px; }
 .social-retro-btn:hover {
-    background-color: #fff; /* S'éclaire un peu au survol */
-    transform: translate(4px, 4px); /* Se déplace vers l'ombre */
-    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4); /* L'ombre diminue */
+    background-color: #fff; transform: translate(4px, 4px);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4);
+}
+.social-retro-btn:active { transform: translate(8px, 8px); box-shadow: none; }
+
+/* ============================================================
+   WIDGET CAMERA
+   ============================================================ */
+.camera-widget {
+    position: absolute; top: 350px; left: 950px; width: 280px;
+    background-color: var(--win-bg); border: 3px solid var(--win-border);
+    box-shadow: var(--shadow-hard); z-index: 40; display: flex; flex-direction: column;
 }
 
-.social-retro-btn:active {
-    transform: translate(8px, 8px); /* S'écrase totalement */
-    box-shadow: none; /* Plus d'ombre */
+.camera-widget__header {
+    background: linear-gradient(90deg, #000, #333); padding: 8px 10px; /* Un peu plus de hauteur */
+    border-bottom: 3px solid var(--win-border); font-weight: bold; font-size: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: #fff; cursor: grab; user-select: none;
+}
+
+.camera-controls { display: flex; align-items: center; }
+
+/* LE NOUVEAU BOUTON D'ACTIVATION */
+.cam-btn { 
+    background-color: #1a1a1a; /* Fond sombre */
+    border: 1px solid #ff0055; /* Bordure rouge néon */
+    color: #ff0055;
+    padding: 4px 12px;         /* Espace autour du texte (Zone de clic agrandie) */
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+/* Effet au survol : devient plein */
+.cam-btn:hover { 
+    background-color: #ff0055; 
+    color: #fff;
+    box-shadow: 0 0 8px #ff0055; /* Petit effet lumineux */
+}
+
+/* Quand activé (géré par le JS qui change la couleur inline, mais on prévoit le coup) */
+.cam-btn.active {
+    border-color: #00ff00;
+    color: #00ff00;
+}
+
+.camera-widget__body { padding: 10px; background-color: #000; }
+
+.video-container {
+    position: relative; width: 100%; height: 180px; background: #111;
+    overflow: hidden; border: 2px solid #333;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Message par défaut quand la caméra est éteinte */
+.video-container::after {
+    content: "NO SIGNAL";
+    color: #333;
+    font-family: monospace;
+    font-size: 20px;
+    position: absolute;
+    z-index: 0;
+}
+
+#webcamVideo {
+    width: 100%; height: 100%; object-fit: cover;
+    transform: scaleX(-1); opacity: 0.8;
+    position: relative; z-index: 1; /* Passe au-dessus du texte NO SIGNAL */
+}
+
+.scanlines {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(transparent 0px, transparent 2px, rgba(0, 0, 0, 0.3) 3px);
+    pointer-events: none; z-index: 2;
+}
+
+.rec-indicator {
+    position: absolute; top: 10px; right: 10px; color: #ff0000;
+    font-weight: bold; font-family: monospace; font-size: 12px;
+    z-index: 3; animation: blink 1s infinite; display: none;
+    background: rgba(0,0,0,0.5); padding: 2px 5px; border-radius: 2px;
+}
+.rec-indicator.active { display: block; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* RESPONSIVE */
+@media screen and (max-width: 768px) {
+    .camera-widget { display: none !important; }
 }
 
 /* ============================================================
-   WIDGET CAMERA (STYLE RETRO)
+   WIDGET PONG
    ============================================================ */
-
-.camera-widget {
+.pong-widget {
     position: absolute; 
-    top: 300px; /* Position initiale différente du Paint */
-    left: 20px;
-    width: 280px;
+    top: 100px; 
+    left: 400px; /* Position de départ */
+    width: 290px;
     background-color: var(--win-bg); 
     border: 3px solid var(--win-border); 
     box-shadow: var(--shadow-hard);
@@ -344,10 +347,10 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
     flex-direction: column;
 }
 
-.camera-widget__header {
-    background: linear-gradient(90deg, #000, #333); /* Dégradé sombre style "Sécurité" */
-    padding: 5px 10px; 
-    border-bottom: 3px solid var(--win-border);
+.pong-widget__header {
+    background: linear-gradient(90deg, #000, #333); 
+    padding: 5px 10px;
+    border-bottom: 3px solid var(--win-border); 
     font-weight: bold; 
     font-size: 12px; 
     display: flex; 
@@ -355,73 +358,43 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
     align-items: center; 
     color: #fff;
     cursor: grab;
+    user-select: none;
 }
 
-.camera-controls {
-    display: flex;
-    gap: 10px;
-}
+.pong-controls { display: flex; gap: 10px; align-items: center; }
 
-.cam-btn {
-    background: none; border: none; cursor: pointer; color: #ff0055; font-size: 14px;
+.pong-btn {
+    background: none; border: 1px solid #fff; color: #fff; 
+    cursor: pointer; font-size: 10px; width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
 }
-.cam-btn:hover { text-shadow: 0 0 5px #ff0055; }
+.pong-btn:hover { background: #fff; color: #000; }
 
-.cam-close {
+.pong-close {
     background: none; border: none; color: white; cursor: pointer; font-weight: bold;
 }
-.cam-close:hover { color: #ff4d4d; }
+.pong-close:hover { color: #ff4d4d; }
 
-.camera-widget__body {
+.pong-widget__body {
     padding: 10px; 
+    background-color: #222;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+}
+
+#pongCanvas {
     background-color: #000;
+    border: 2px solid #555;
+    cursor: none; /* Cache la souris sur le jeu pour l'immersion */
 }
 
-.video-container {
-    position: relative;
-    width: 100%;
-    height: 180px;
-    background: #111;
-    overflow: hidden;
-    border: 2px solid #333;
-}
-
-#webcamVideo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scaleX(-1); /* Effet miroir */
-    opacity: 0.8; /* Un peu sombre pour le style */
-}
-
-/* --- EFFETS SPÉCIAUX RÉTRO --- */
-
-/* Lignes de balayage TV */
-.scanlines {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: repeating-linear-gradient(
-        transparent 0px,
-        transparent 2px,
-        rgba(0, 0, 0, 0.3) 3px
-    );
-    pointer-events: none;
-    z-index: 2;
-}
-
-/* Clignotement REC rouge */
-.rec-indicator {
-    position: absolute; top: 10px; right: 10px;
-    color: #ff0000; font-weight: bold; font-family: monospace; font-size: 12px;
-    z-index: 3;
-    animation: blink 1s infinite;
-    display: none; /* Caché par défaut */
-}
-
-.rec-indicator.active { display: block; }
-
-@keyframes blink { 50% { opacity: 0; } }
-
-/* Responsive : caché sur mobile */
-@media screen and (max-width: 768px) {
-    .camera-widget { display: none !important; }
-}
+#pongScore {
+    margin-top: 5px;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 2px;
+} 
