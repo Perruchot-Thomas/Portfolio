@@ -70,7 +70,7 @@ body.easter-egg-active, body.easter-egg-active * { cursor: url('../assets/fuck.p
     background-color: var(--win-bg); 
     border: 3px solid var(--win-border); 
     box-shadow: var(--shadow-hard);
-    z-index: 50; display: flex; flex-direction: column;
+    z-index: 50; display: none; flex-direction: column;
 }
 
 .music-player__header {
@@ -247,7 +247,7 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
 .camera-widget {
     position: absolute; top: 350px; left: 950px; width: 280px;
     background-color: var(--win-bg); border: 3px solid var(--win-border);
-    box-shadow: var(--shadow-hard); z-index: 40; display: flex; flex-direction: column;
+    box-shadow: var(--shadow-hard); z-index: 40; display: none; flex-direction: column;
 }
 .camera-widget__header {
     background: linear-gradient(90deg, #000, #333); padding: 8px 10px;
@@ -296,7 +296,7 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
 .pong-widget {
     position: absolute; top: 100px; left: 400px; width: 290px;
     background-color: var(--win-bg); border: 3px solid var(--win-border); 
-    box-shadow: var(--shadow-hard); z-index: 40; display: flex; flex-direction: column;
+    box-shadow: var(--shadow-hard); z-index: 40; display: none; flex-direction: column;
 }
 .pong-widget__header {
     background: linear-gradient(90deg, #000, #333); padding: 5px 10px;
