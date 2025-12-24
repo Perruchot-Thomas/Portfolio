@@ -305,8 +305,6 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
     color: #fff; cursor: grab; user-select: none;
 }
 .pong-controls { display: flex; gap: 10px; align-items: center; }
-
-/* BOUTON CORRIGÉ ICI */
 .pong-btn {
     background: none; 
     border: 1px solid #fff; 
@@ -340,11 +338,6 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
 #pongScore {
     margin-top: 5px; color: #fff; font-family: 'Courier New', monospace;
     font-weight: bold; font-size: 16px; letter-spacing: 2px;
-}
-
-/* RESPONSIVE */
-@media screen and (max-width: 768px) {
-    .camera-widget, .pong-widget, .taskbar, .start-menu, .music-player { display: none !important; }
 }
 
 /* ============================================================
@@ -401,4 +394,64 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
 .taskbar__tray {
     margin-left: auto; background: var(--win-header-end); border: 2px solid var(--win-border); color: var(--text-light);
     padding: 0 15px; height: 100%; display: flex; align-items: center; justify-content: center; min-width: 70px;
+}
+
+/* ============================================================
+   ECRAN MOBILE / TABLETTE (Bloqueur)
+   ============================================================ */
+#mobile-blocker {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: #111;
+    z-index: 999999;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.mobile-blocker__content {
+    border: 2px solid #988a8f;
+    padding: 30px;
+    background: #000;
+    box-shadow: 0 0 20px rgba(66, 66, 66, 0.3);
+    max-width: 400px;
+}
+
+.mobile-blocker__content i {
+    color: #988a8f;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
+
+.mobile-blocker__content h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+.mobile-blocker__content p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* RESPONSIVE : Si écran < 768px (Mobile), on affiche le bloqueur et on cache le reste */
+@media screen and (max-width: 768px) {
+    #mobile-blocker { display: flex !important; }
+    
+    /* On cache tout le reste pour être sûr */
+    .desktop, .taskbar, .start-menu, .window, .camera-widget, .pong-widget, .music-player { 
+        display: none !important; 
+    }
 }
