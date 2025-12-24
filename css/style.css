@@ -21,7 +21,7 @@ html, body, * {
     cursor: url('../assets/curseur copie.png'), auto !important; 
 }
 a, button, .desktop__shortcut, .file-grid__item, .window__close, .start-menu__item, .taskbar__start-btn, .clickable-image, .window__header, .control-btn, .cam-btn, .cam-close, .pong-btn, .pong-close {
-    cursor: url('../assets/curseur point.png'), pointer !important;
+    cursor: url('../assets/curseur copie.png'), pointer !important;
 }
 input, textarea, span, p, h1, h2, h3, h4, h5, h6 { 
     cursor: url('../assets/curseur copie.png'), text !important; 
@@ -306,17 +306,35 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
 }
 .pong-controls { display: flex; gap: 10px; align-items: center; }
 .pong-btn {
-    background: none; border: 1px solid #fff; color: #fff; 
-    cursor: pointer; font-size: 10px; width: 20px; height: 20px;
-    display: flex; align-items: center; justify-content: center; border-radius: 50%;
+    background: none; 
+    border: 1px solid #fff; 
+    color: #fff; 
+    cursor: pointer; 
+    font-size: 12px;       /* Légèrement plus grand pour la flèche */
+    width: 26px;           /* Agrandit la zone cliquable (avant: 20px) */
+    height: 26px;          /* Hauteur égale pour un cercle parfait */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border-radius: 50%;
+    padding: 0;            /* Supprime les décalages internes par défaut */
+    line-height: 1;        /* Force l'alignement vertical */
+    padding-left: 2px;     /* Petite astuce optique : le symbole ▶ est souvent mal centré visuellement, cela le recentre */
 }
-.pong-btn:hover { background: #fff; color: #000; }
+
+.pong-btn:hover { 
+    background: #fff; 
+    color: #000; 
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Ajoute une lueur au survol pour bien voir la zone active */
+}
+
 .pong-close { background: none; border: none; color: white; cursor: pointer; font-weight: bold; }
 .pong-close:hover { color: #ff4d4d; }
 .pong-widget__body {
     padding: 10px; background-color: #222; display: flex; flex-direction: column; align-items: center;
 }
-#pongCanvas { background-color: #000; border: 2px solid #555; cursor: none; }
+/* CORRECTION: cursor: none important pour que le custom cursor n'écrase pas le jeu */
+#pongCanvas { background-color: #000; border: 2px solid #555; cursor: none !important; }
 #pongScore {
     margin-top: 5px; color: #fff; font-family: 'Courier New', monospace;
     font-weight: bold; font-size: 16px; letter-spacing: 2px;

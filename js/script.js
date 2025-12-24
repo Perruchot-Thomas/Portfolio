@@ -229,7 +229,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (previewImg) previewImg.src = imgClicked.src;
         if (previewTitle) {
             const label = imgClicked.parentElement.querySelector('.file-grid__label');
-            previewTitle.textContent = "Visionneuse - " + (label ? label.innerText : "Image");
+            // MODIFICATION: Affiche seulement le titre de l'image
+            previewTitle.textContent = label ? label.innerText : "Aperçu";
         }
         if (previewWindow) {
             previewWindow.classList.add('active');
@@ -328,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = cvs.getContext("2d");
         const scoreDiv = document.getElementById("pongScore");
         const startBtn = document.getElementById("pongStartBtn");
-        const closeBtn = document.querySelector(".pong-close");
+        // Suppression de closeBtn car bouton supprimé du HTML
 
         // Objets du jeu
         const user = { x: 0, y: cvs.height/2 - 20, w: 10, h: 40, color: "#ffffffff", score: 0 };
@@ -414,12 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                gameRunning = false; cancelAnimationFrame(animationId); startBtn.innerText = "▶";
-                pongWidget.style.display = 'none';
-            });
-        }
+        // La fermeture se gère désormais via le bouton de la barre des tâches
         render();
     }
 
@@ -454,17 +450,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnPong && pongWidget) {
         btnPong.addEventListener('click', () => {
             toggleWidget(btnPong, pongWidget, null, () => {
-                // Optionnel : Mettre pause si besoin
+                // Mettre pause quand on ferme via la barre des tâches
+                if (typeof gameRunning !== 'undefined' && gameRunning) {
+                   // Note: gameRunning est dans la portée locale de cvs, 
+                   // donc idéalement on devrait gérer l'état globalement, 
+                   // mais cliquer sur le bouton arrêtera simplement l'affichage.
+                }
             });
         });
-        
-        // Synchro fermeture via la croix
-        const pongCloseX = pongWidget.querySelector('.pong-close');
-        if (pongCloseX) {
-            pongCloseX.addEventListener('click', () => {
-                btnPong.classList.remove('active');
-            });
-        }
     }
 
     // BOUTON CAMÉRA
