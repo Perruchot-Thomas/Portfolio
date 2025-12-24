@@ -331,8 +331,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeBtn = document.querySelector(".pong-close");
 
         // Objets du jeu
-        const user = { x: 0, y: cvs.height/2 - 20, w: 10, h: 40, color: "#00f2ea", score: 0 };
-        const com = { x: cvs.width - 10, y: cvs.height/2 - 20, w: 10, h: 40, color: "#ff0055", score: 0 };
+        const user = { x: 0, y: cvs.height/2 - 20, w: 10, h: 40, color: "#ffffffff", score: 0 };
+        const com = { x: cvs.width - 10, y: cvs.height/2 - 20, w: 10, h: 40, color: "#ffffffff", score: 0 };
         const ball = { x: cvs.width/2, y: cvs.height/2, r: 5, speed: 4, velocityX: 4, velocityY: 4, color: "#fff" };
         const net = { x: (cvs.width - 2)/2, y: 0, height: 10, width: 2, color: "#555" };
 
