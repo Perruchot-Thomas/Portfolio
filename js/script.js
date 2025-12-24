@@ -7,23 +7,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // === 0. CONFIGURATION MUSIQUE ===
     const songs = [
         {
-            title: "Piste Audio 1",
-            artist: "Artiste Inconnu",
+            title: "Slickville",
+            artist: "Ricky Hill",
             src: "assets/music/song1.mp3", 
             cover: "assets/cover1.jpg"
         },
         {
-            title: "Piste Audio 2",
-            artist: "Artiste Inconnu",
+            title: "Hate Me",
+            artist: "Ellie Goulding, Juice Wrld, Snakehips",
             src: "assets/music/song2.mp3",
             cover: "assets/cover2.jpg"
         },
         {
-            title: "Piste Audio 3",
-            artist: "Artiste Inconnu",
+            title: "...And to Those I Love, Thanks for Sticking Around",
+            artist: "$uicideboy$",
             src: "assets/music/song3.mp3",
             cover: "assets/cover3.jpg"
         }
+        
     ];
 
     // === VARIABLES GLOBALES ===

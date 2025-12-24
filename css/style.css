@@ -305,6 +305,8 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
     color: #fff; cursor: grab; user-select: none;
 }
 .pong-controls { display: flex; gap: 10px; align-items: center; }
+
+/* BOUTON CORRIGÉ ICI */
 .pong-btn {
     background: none; 
     border: 1px solid #fff; 
@@ -319,7 +321,7 @@ hr { border: 0; border-top: 2px solid var(--win-border); margin: 15px 0; }
     border-radius: 50%;
     padding: 0;            /* Supprime les décalages internes par défaut */
     line-height: 1;        /* Force l'alignement vertical */
-    padding-left: 2px;     /* Petite astuce optique : le symbole ▶ est souvent mal centré visuellement, cela le recentre */
+    padding-left: 2px;     /* Petite astuce optique */
 }
 
 .pong-btn:hover { 
